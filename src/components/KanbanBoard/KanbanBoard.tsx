@@ -1,16 +1,15 @@
-import React, { useState } from "react"
-import { jobType } from "../utils/types"
-import { jobColumns } from "../utils/data"
+import { useState } from "react"
+import { jobType } from "../../utils/types"
+import { jobColumns } from "../../utils/data"
 import {
-  closestCorners,
   DndContext,
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
 } from "@dnd-kit/core"
-import { KanbanColumn } from "./KanbanColumn"
-import { KanbanCard } from "./KanbanCard"
+import { KanbanColumn } from "../KanbanBoard/KanbanColumn"
+import { KanbanCard } from "../KanbanBoard/KanbanCard"
 import { arrayMove } from "@dnd-kit/sortable"
 
 export const KanbanBoard = () => {
@@ -114,15 +113,14 @@ export const KanbanBoard = () => {
   }
 
   return (
-    <div className="bg-pink-300 h-full">
-      Kanban board
+    <div className=" h-full">
+      <div className="text-2xl font-bold p-6"> Job Tracker </div>
       <DndContext
-        collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-6 p-6 bg-gray-100 min-h-screen">
+        <div className="flex gap-6 p-6 min-h-screen bg-pink-100">
           {columns.map((column) => (
             <KanbanColumn key={column.id} column={column} />
           ))}

@@ -7,5 +7,6 @@ export type jobType = {
 
 export type jobColumnType = {
   id: string
+  colTitle: string
   jobs: Array<jobType>
 }

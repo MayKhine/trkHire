@@ -3,6 +3,7 @@ import { jobColumnType } from "./types"
 export const jobColumns: jobColumnType[] = [
   {
     id: "toApply",
+    colTitle: "To Apply",
     jobs: [
       { id: "1", title: "developer", company: "Google", location: "Boston" },
       {
@@ -16,6 +17,7 @@ export const jobColumns: jobColumnType[] = [
 
   {
     id: "applied",
+    colTitle: "Applied",
     jobs: [
       {
         id: "3",
@@ -33,6 +35,7 @@ export const jobColumns: jobColumnType[] = [
   },
   {
     id: "interview",
+    colTitle: "Interview",
     jobs: [
       {
         id: "6",
@@ -44,6 +47,7 @@ export const jobColumns: jobColumnType[] = [
   },
   {
     id: "offer",
+    colTitle: "Offer",
     jobs: [
       {
         id: "7",
@@ -55,6 +59,7 @@ export const jobColumns: jobColumnType[] = [
   },
   {
     id: "rejected",
+    colTitle: "Rejected",
     jobs: [
       {
         id: "5",
