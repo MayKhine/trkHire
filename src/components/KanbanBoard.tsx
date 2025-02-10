@@ -1,75 +1,116 @@
-import { useState } from "react"
-import { jobColumnType, jobType } from "../utils/types"
+import React, { useState } from "react"
+import { jobType } from "../utils/types"
 import { jobColumns } from "../utils/data"
-import { closestCorners, DndContext, DragOverlay } from "@dnd-kit/core"
+import {
+  closestCorners,
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  DragOverlay,
+  DragStartEvent,
+} from "@dnd-kit/core"
 import { KanbanColumn } from "./KanbanColumn"
 import { KanbanCard } from "./KanbanCard"
-import { SortableContext } from "@dnd-kit/sortable"
+import { arrayMove } from "@dnd-kit/sortable"
 
 export const KanbanBoard = () => {
   const [columns, setColumns] = useState(jobColumns)
 
   const [activeJob, setActiveJob] = useState<jobType | null>(null)
 
-  const handleDragStart = (event: any) => {
+  const handleDragStart = (event: DragStartEvent) => {
     setActiveJob(event.active.data.current?.job)
   }
 
-  const handleDragEnd = (event: any) => {
+  const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event
-    console.log("handle drag end :", active.id, over.id)
     if (!over) return
 
-    //look for the current job's column using its id in all columns
+    console.log("active. ", active, "over", over)
+
     const fromColumn = columns.find((col) =>
       col.jobs.some((job) => job.id === active.id)
     )
 
-    //get the to column from over
-    const toColumn = columns.find((col) => col.id === over.id)
-
-    //return if no from or to or they are same columns
-    if (!fromColumn || !toColumn || fromColumn === toColumn) return
-
-    //filter out the current job from its column
-    const fromJobs = fromColumn.jobs.filter((job) => job.id !== active.id)
-    //add current job to its new column
-    const toJobs = [...toColumn.jobs, activeJob!]
-
-    setColumns((prevColumns) =>
-      prevColumns.map((col) =>
-        col.id === fromColumn.id
-          ? { ...col, jobs: fromJobs }
-          : col.id === toColumn.id
-          ? { ...col, jobs: toJobs }
-          : col
-      )
+    const toColumn = columns.find((col) =>
+      col.jobs.some((job) => job.id === over.id)
     )
 
+    const fromColumnId = fromColumn?.id
+    let toColumnId = toColumn?.id
+
+    if (!toColumnId) toColumnId = over.id.toString()
+
+    if (!fromColumnId || !toColumnId || fromColumnId === toColumnId) return
+
+    setColumns((prev) => {
+      const updated = [...prev]
+      const updatedFromColumn = updated.find((col) => col.id === fromColumnId)
+      const updatedToColumn = updated.find((col) => col.id === toColumnId)
+
+      if (!updatedFromColumn || !updatedToColumn) return prev
+
+      // Move the job to a new column
+      const job = updatedFromColumn.jobs.find((j) => j.id === active.id)
+      updatedFromColumn.jobs = updatedFromColumn.jobs.filter(
+        (j) => j.id !== active.id
+      )
+      if (job) updatedToColumn.jobs.push(job)
+
+      return updated
+    })
+  }
+
+  const handleDragEnd = (event: DragEndEvent) => {
     setActiveJob(null)
-    console.log("jobcolumn: ", columns)
 
-    // setColumns((prev) => {
-    //   const updated = [...prev]
+    const { active, over } = event
+    if (!over) return
 
-    //   const fromColumn = updated.find((col) => col.id === fromColumnId)
-    //   const toColumn = updated.find((col) => col.id === toColumnId)
+    const fromColumn = columns.find((col) =>
+      col.jobs.some((job) => job.id === active.id)
+    )
 
-    //   if (!fromColumn || !toColumn) return prev
+    const toColumn = columns.find((col) =>
+      col.jobs.some((job) => job.id === over.id)
+    )
 
-    //   const job = fromColumn.jobs.find((j) => j.id === active.id)
-    //   fromColumn.jobs = fromColumn.jobs.filter((j) => j.id !== active.id)
+    const fromColumnId = fromColumn?.id
+    const toColumnId = toColumn?.id
 
-    //   // Insert into the correct index
-    //   const overIndex = toColumn.jobs.findIndex((j) => j.id === over.id)
-    //   if (overIndex === -1) {
-    //     toColumn.jobs.push(job)
-    //   } else {
-    //     toColumn.jobs.splice(overIndex, 0, job)
-    //   }
+    if (!fromColumnId || !toColumnId) return
 
-    //   return updated
-    // })
+    setColumns((prev) => {
+      const updated = prev.map((column) => ({
+        ...column,
+        jobs: [...column.jobs], // Make a shallow copy of the jobs array
+      }))
+
+      const updatedFromColumn = updated.find((col) => col.id === fromColumnId)
+      const updatedToColumn = updated.find((col) => col.id === toColumnId)
+
+      if (!updatedFromColumn || !updatedToColumn) return prev
+
+      // Reorder inside the same column
+      if (fromColumnId === toColumnId) {
+        const oldIndex = updatedFromColumn.jobs.findIndex(
+          (job) => job.id === active.id
+        )
+
+        const newIndex = updatedToColumn.jobs.findIndex(
+          (job) => job.id === over.id
+        )
+
+        console.log("old index", oldIndex, "newindex: ", newIndex)
+
+        updatedFromColumn.jobs = arrayMove(
+          updatedFromColumn.jobs,
+          oldIndex,
+          newIndex
+        )
+      }
+      return updated
+    })
   }
 
   return (
@@ -78,6 +119,7 @@ export const KanbanBoard = () => {
       <DndContext
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
         <div className="flex gap-6 p-6 bg-gray-100 min-h-screen">
