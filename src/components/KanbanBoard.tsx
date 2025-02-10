@@ -1,8 +1,10 @@
 import { useState } from "react"
-import { jobType } from "../utils/types"
+import { jobColumnType, jobType } from "../utils/types"
 import { jobColumns } from "../utils/data"
-import { DndContext } from "@dnd-kit/core"
+import { closestCorners, DndContext, DragOverlay } from "@dnd-kit/core"
 import { KanbanColumn } from "./KanbanColumn"
+import { KanbanCard } from "./KanbanCard"
+import { SortableContext } from "@dnd-kit/sortable"
 
 export const KanbanBoard = () => {
   const [columns, setColumns] = useState(jobColumns)
@@ -25,13 +27,56 @@ export const KanbanBoard = () => {
 
     //get the to column from over
     const toColumn = columns.find((col) => col.id === over.id)
+
+    //return if no from or to or they are same columns
+    if (!fromColumn || !toColumn || fromColumn === toColumn) return
+
+    //filter out the current job from its column
+    const fromJobs = fromColumn.jobs.filter((job) => job.id !== active.id)
+    //add current job to its new column
+    const toJobs = [...toColumn.jobs, activeJob!]
+
+    setColumns((prevColumns) =>
+      prevColumns.map((col) =>
+        col.id === fromColumn.id
+          ? { ...col, jobs: fromJobs }
+          : col.id === toColumn.id
+          ? { ...col, jobs: toJobs }
+          : col
+      )
+    )
+
+    setActiveJob(null)
+    console.log("jobcolumn: ", columns)
+
+    // setColumns((prev) => {
+    //   const updated = [...prev]
+
+    //   const fromColumn = updated.find((col) => col.id === fromColumnId)
+    //   const toColumn = updated.find((col) => col.id === toColumnId)
+
+    //   if (!fromColumn || !toColumn) return prev
+
+    //   const job = fromColumn.jobs.find((j) => j.id === active.id)
+    //   fromColumn.jobs = fromColumn.jobs.filter((j) => j.id !== active.id)
+
+    //   // Insert into the correct index
+    //   const overIndex = toColumn.jobs.findIndex((j) => j.id === over.id)
+    //   if (overIndex === -1) {
+    //     toColumn.jobs.push(job)
+    //   } else {
+    //     toColumn.jobs.splice(overIndex, 0, job)
+    //   }
+
+    //   return updated
+    // })
   }
 
   return (
     <div className="bg-pink-300 h-full">
       Kanban board
       <DndContext
-        // collisionDetection={closestCorners}
+        collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
@@ -41,7 +86,7 @@ export const KanbanBoard = () => {
           ))}
         </div>
 
-        {/* <DragOverlay>{activeJob && <KanbanCard job={activeJob} />}</DragOverlay> */}
+        <DragOverlay>{activeJob && <KanbanCard job={activeJob} />}</DragOverlay>
       </DndContext>
     </div>
   )
