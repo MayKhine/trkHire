@@ -1,10 +1,10 @@
-import { jobType } from "../../utils/types"
+import { JobApplicationType } from "../../utils/types"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 
 type KanbanCardProps = {
   colId?: string
-  job: jobType
+  job: JobApplicationType
 }
 export const KanbanCard = ({ colId, job }: KanbanCardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } =

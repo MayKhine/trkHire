@@ -1,13 +1,13 @@
 import { useDroppable } from "@dnd-kit/core"
-import { jobColumnType } from "../../utils/types"
+import { jobByStatusColumnsType } from "../../utils/types"
 import { KanbanCard } from "./KanbanCard"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { KanbanAddJobButton } from "./KanbanAddJobButton"
 import { useState } from "react"
 import { JobFormModal } from "../modals/JobFormModal"
-
+import { jobs } from "../../utils/data"
 type KanbanColumnProps = {
-  column: jobColumnType
+  column: jobByStatusColumnsType
 }
 
 export const KanbanColumn = ({ column }: KanbanColumnProps) => {
@@ -16,6 +16,7 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
     data: { columnId: column.id },
   })
   const [jobFormModalToggle, setJobFormModalToggle] = useState(false)
+
   return (
     <div
       ref={setNodeRef}
@@ -24,13 +25,14 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
       <h2 className="text-lg font-bold mb-2">{column.colTitle}</h2>
 
       <SortableContext
-        items={column.jobs.map((job) => job.id)}
+        items={column.jobs.map((jobId) => jobId)}
         strategy={verticalListSortingStrategy}
       >
         <div className="space-y-4">
-          {column.jobs.map((job) => (
-            <KanbanCard key={job.id} job={job} colId={column.id} />
-          ))}
+          {column.jobs.map((jobId) => {
+            const curJob = jobs.find((element) => element.id === jobId)!
+            return <KanbanCard key={jobId} job={curJob} colId={column.id} />
+          })}
 
           <KanbanAddJobButton
             onClickHandler={() => {

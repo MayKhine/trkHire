@@ -1,6 +1,8 @@
 import { useState } from "react"
-import { jobType } from "../../utils/types"
-import { jobColumns } from "../../utils/data"
+import { JobApplicationType } from "../../utils/types"
+// import { jobColumns } from "../../utils/data"
+import { jobByStatusColumns } from "../../utils/data"
+
 import {
   DndContext,
   DragEndEvent,
@@ -11,11 +13,13 @@ import {
 import { KanbanColumn } from "./KanbanColumn"
 import { KanbanCard } from "./KanbanCard"
 import { arrayMove } from "@dnd-kit/sortable"
+import { jobs as initialJobs } from "../../utils/data"
 
 export const KanbanBoard = () => {
-  const [columns, setColumns] = useState(jobColumns)
+  const [columns, setColumns] = useState(jobByStatusColumns)
+  const [jobs, setJobs] = useState(initialJobs)
 
-  const [activeJob, setActiveJob] = useState<jobType | null>(null)
+  const [activeJob, setActiveJob] = useState<JobApplicationType | null>(null)
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveJob(event.active.data.current?.job)
@@ -25,18 +29,31 @@ export const KanbanBoard = () => {
     const { active, over } = event
     if (!over) return
 
-    console.log("active. ", active, "over", over)
+    // console.log(
+    //   "active. ",
+    //   active,
+    //   active.data.current?.colId,
+    //   "over",
+    //   over.data.current?.colId
+    // )
 
-    const fromColumn = columns.find((col) =>
-      col.jobs.some((job) => job.id === active.id)
-    )
+    // const fromColumn = columns.find((col) =>
+    //   col.jobs.some((job) => job.id === active.id)
+    // )
 
-    const toColumn = columns.find((col) =>
-      col.jobs.some((job) => job.id === over.id)
-    )
+    // const fromColumn = columns.find((col) =>
+    //   col.jobs.some((job) => job.id === active.id)
+    // )
 
-    const fromColumnId = fromColumn?.id
-    let toColumnId = toColumn?.id
+    // const toColumn = columns.find((col) =>
+    //   col.jobs.some((job) => job.id === over.id)
+    // )
+
+    // const fromColumnId = fromColumn?.id
+    // let toColumnId = toColumn?.id
+
+    const fromColumnId = active.data.current?.colId
+    let toColumnId = over.data.current?.colId
 
     if (!toColumnId) toColumnId = over.id.toString()
 
@@ -50,13 +67,28 @@ export const KanbanBoard = () => {
       if (!updatedFromColumn || !updatedToColumn) return prev
 
       // Move the job to a new column
-      const job = updatedFromColumn.jobs.find((j) => j.id === active.id)
+      // const job = updatedFromColumn.jobs.find((j) => j.id === active.id)
+      // updatedFromColumn.jobs = updatedFromColumn.jobs.filter(
+      //   (j) => j.id !== active.id
+      // )
+
+      const job = updatedFromColumn.jobs.find((jobId) => jobId === active.id)
       updatedFromColumn.jobs = updatedFromColumn.jobs.filter(
-        (j) => j.id !== active.id
+        (jobId) => jobId !== active.id
       )
+
       if (job) updatedToColumn.jobs.push(job)
 
       return updated
+    })
+
+    //also set the job
+    setJobs((prev) => {
+      return prev.map((job) =>
+        job.id === active.id
+          ? { ...job, status: over.data.current?.colId ?? over.id }
+          : job
+      )
     })
   }
 
@@ -66,16 +98,19 @@ export const KanbanBoard = () => {
     const { active, over } = event
     if (!over) return
 
-    const fromColumn = columns.find((col) =>
-      col.jobs.some((job) => job.id === active.id)
-    )
+    // const fromColumn = columns.find((col) =>
+    //   col.jobs.some((job) => job.id === active.id)
+    // )
 
-    const toColumn = columns.find((col) =>
-      col.jobs.some((job) => job.id === over.id)
-    )
+    // const toColumn = columns.find((col) =>
+    //   col.jobs.some((job) => job.id === over.id)
+    // )
 
-    const fromColumnId = fromColumn?.id
-    const toColumnId = toColumn?.id
+    // const fromColumnId = fromColumn?.id
+    // const toColumnId = toColumn?.id
+
+    const fromColumnId = active.data.current?.colId
+    const toColumnId = over.data.current?.colId
 
     if (!fromColumnId || !toColumnId) return
 
@@ -93,11 +128,11 @@ export const KanbanBoard = () => {
       // Reorder inside the same column
       if (fromColumnId === toColumnId) {
         const oldIndex = updatedFromColumn.jobs.findIndex(
-          (job) => job.id === active.id
+          (jobId) => jobId === active.id
         )
 
         const newIndex = updatedToColumn.jobs.findIndex(
-          (job) => job.id === over.id
+          (jobId) => jobId === over.id
         )
 
         console.log("old index", oldIndex, "newindex: ", newIndex)
@@ -112,6 +147,7 @@ export const KanbanBoard = () => {
     })
   }
 
+  console.log("Job: ", jobs[0])
   return (
     <div className="h-full bg-red-200 flex flex-col">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
