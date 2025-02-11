@@ -1,19 +1,21 @@
 import { useDroppable } from "@dnd-kit/core"
 import { jobColumnType } from "../../utils/types"
-import { KanbanCard } from "../KanbanBoard/KanbanCard"
+import { KanbanCard } from "./KanbanCard"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { KanbanAddJobButton } from "./KanbanAddJobButton"
+import { useState } from "react"
+import { JobFormModal } from "../modals/JobFormModal"
 
 type KanbanColumnProps = {
   column: jobColumnType
 }
 
 export const KanbanColumn = ({ column }: KanbanColumnProps) => {
-  // const { setNodeRef } = useDroppable({ id: column.id })
   const { setNodeRef } = useDroppable({
     id: column.id,
     data: { columnId: column.id },
   })
-
+  const [jobFormModalToggle, setJobFormModalToggle] = useState(false)
   return (
     <div
       ref={setNodeRef}
@@ -29,8 +31,25 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
           {column.jobs.map((job) => (
             <KanbanCard key={job.id} job={job} colId={column.id} />
           ))}
+
+          <KanbanAddJobButton
+            onClickHandler={() => {
+              setJobFormModalToggle(true)
+            }}
+          />
         </div>
       </SortableContext>
+
+      {jobFormModalToggle && (
+        <JobFormModal
+          onAddHandler={() => {
+            console.log("Tod o . add job")
+          }}
+          onCancleHandler={() => {
+            setJobFormModalToggle(false)
+          }}
+        ></JobFormModal>
+      )}
     </div>
   )
 }

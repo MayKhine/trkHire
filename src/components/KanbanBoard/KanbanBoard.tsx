@@ -8,8 +8,8 @@ import {
   DragOverlay,
   DragStartEvent,
 } from "@dnd-kit/core"
-import { KanbanColumn } from "../KanbanBoard/KanbanColumn"
-import { KanbanCard } from "../KanbanBoard/KanbanCard"
+import { KanbanColumn } from "./KanbanColumn"
+import { KanbanCard } from "./KanbanCard"
 import { arrayMove } from "@dnd-kit/sortable"
 
 export const KanbanBoard = () => {
@@ -113,14 +113,14 @@ export const KanbanBoard = () => {
   }
 
   return (
-    <div className=" h-full">
+    <div className="h-full bg-red-200 flex flex-col">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
       <DndContext
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-6 p-6 min-h-screen bg-pink-100">
+        <div className="flex gap-6 p-6 bg-pink-100 h-full">
           {columns.map((column) => (
             <KanbanColumn key={column.id} column={column} />
           ))}
