@@ -4,6 +4,7 @@ import { RadioButton } from "../buttons/RadioButton"
 import { DropDownButton } from "../buttons/DropDownButton"
 import { interviewType, jobApplicationType } from "../../utils/types"
 import { ExpendButton } from "../buttons/ExpendButton"
+import { DeleteButton } from "../buttons/DeleteButton"
 
 type JobFormModalProps = {
   onCancleHandler: () => void
@@ -19,6 +20,8 @@ export const JobFormModal = ({
   const [statusDropDownToggle, setStatusDropDownToggle] = useState(false)
   const [jobTypeDropDownToggle, setJobTypeDropDownToggle] = useState(false)
   const [interviewExpendToggle, setInterviewExpendToggle] = useState(false)
+  const [contactExpendToggle, setContactExpendToggle] = useState(false)
+
   const [interviews, setInterviews] = useState<Array<string>>(["1"])
 
   const statusMap: Record<string, string> = {
@@ -408,46 +411,58 @@ export const JobFormModal = ({
           </div>
 
           <div>
-            <label htmlFor="contact">Contact Name</label>
-            <input
-              className="w-full border p-2 rounded mb-2 bg-amber-100"
-              id="contactName"
-              type="text"
-              placeholder="Contact Name"
-              alt="Location"
-              onChange={(event) => {
-                newJobChangeHandler("contactName", event)
-              }}
-            />
-          </div>
-
-          <div>
             <label htmlFor="contact">Contact</label>
-            <input
-              className="w-full border p-2 rounded mb-2 bg-amber-100"
-              id="contact"
-              type="text"
-              placeholder="Email, Phone, ..."
-              alt="Location"
-              onChange={(event) => {
-                newJobChangeHandler("contact", event)
+            <ExpendButton
+              onClickHandler={() => {
+                setContactExpendToggle(!contactExpendToggle)
               }}
+              expendToggle={contactExpendToggle}
             />
-          </div>
-
-          <div>
-            <label htmlFor="contact">Contact Notes</label>
-            <textarea
-              className="w-full border p-2 rounded mb-2 bg-amber-100"
-              id="contact"
-              rows={2}
-              onChange={(event) => {
-                newJobChangeHandler("contactNotes", event)
-              }}
-            />
+            {contactExpendToggle && (
+              <div>
+                <div>
+                  <label htmlFor="contact">Contact Name</label>
+                  <input
+                    className="w-full border p-2 rounded mb-2 bg-amber-100"
+                    id="contactName"
+                    type="text"
+                    placeholder="Contact Name"
+                    alt="Location"
+                    onChange={(event) => {
+                      newJobChangeHandler("contactName", event)
+                    }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact">Contact</label>
+                  <input
+                    className="w-full border p-2 rounded mb-2 bg-amber-100"
+                    id="contact"
+                    type="text"
+                    placeholder="Email, Phone, ..."
+                    alt="Location"
+                    onChange={(event) => {
+                      newJobChangeHandler("contact", event)
+                    }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact">Contact Notes</label>
+                  <textarea
+                    className="w-full border p-2 rounded mb-2 bg-amber-100"
+                    id="contact"
+                    rows={2}
+                    onChange={(event) => {
+                      newJobChangeHandler("contactNotes", event)
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="bg-amber-100">
+            <label htmlFor="interview">Interview</label>
             <ExpendButton
               onClickHandler={() => {
                 setInterviewExpendToggle(!interviewExpendToggle)
@@ -461,9 +476,16 @@ export const JobFormModal = ({
                   return (
                     <div>
                       <div>
-                        <label htmlFor="Interview Round">
-                          Interview Round{" "}
-                        </label>
+                        <div>
+                          <label htmlFor="Interview Round">
+                            Interview Round {index + 1}
+                          </label>
+                          <DeleteButton
+                            onClickHandler={() => {
+                              console.log("to do , delete the interview ")
+                            }}
+                          />
+                        </div>
                         <input
                           className="w-full border p-2 rounded mb-2 bg-amber-100"
                           id="interviewRound"
