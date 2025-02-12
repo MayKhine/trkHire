@@ -17,7 +17,7 @@ export const JobFormModal = ({
 }: JobFormModalProps) => {
   const [statusDropDownToggle, setStatusDropDownToggle] = useState(false)
   const [jobTypeDropDownToggle, setJobTypeDropDownToggle] = useState(false)
-  const [interviews, setInterviews] = useState(["1"])
+  const [interviews, setInterviews] = useState<Array<string>>([])
   const statusMap: Record<string, string> = {
     saved: "Saved",
     applied: "Applied",
@@ -56,56 +56,6 @@ export const JobFormModal = ({
     event: any,
     interviewIndex?: number
   ) => {
-    //interviewRound interviewDate interviewNotes
-
-    // if (
-    //   (typeof interviewIndex === "number" && key === "interviewRound") ||
-    //   (typeof interviewIndex === "number" && key === "interviewDate") ||
-    //   (typeof interviewIndex === "number" && key === "interviewNotes")
-    // ) {
-    //   if (!newJob.interviews) {
-    //     const tempKey = interviewMap[key]
-    //     const tempInterview = { [tempKey]: event.target.value }
-
-    //     setNewJob((prev) => {
-    //       return {
-    //         ...prev,
-    //         interviews: [tempInterview],
-    //       }
-    //     })
-    //     return
-    //   } else if (
-    //     newJob.interviews.length > 0 &&
-    //     newJob.interviews[interviewIndex] == undefined
-    //   ) {
-    //     const tempKey = interviewMap[key]
-    //     const tempInterview = { [tempKey]: event.target.value }
-
-    //     setNewJob((prev) => {
-    //       return {
-    //         ...prev,
-    //         interviews: prev.interviews.push(tempInterview),
-    //       }
-    //     })
-    //     return
-    //   } else {
-    //     console.log("update inteview")
-    //     setNewJob((prev) => {
-    //       return {
-    //         ...prev,
-    //         interviews: prev.interviews?.map((interview, index) => {
-    //           if (index === interviewIndex) {
-    //             return { ...interview, [interviewMap[key]]: event.target.value }
-    //           } else {
-    //             return interview
-    //           }
-    //         }),
-    //       }
-    //     })
-    //     return
-    //   }
-    // }
-
     if (
       (typeof interviewIndex === "number" && key === "interviewRound") ||
       (typeof interviewIndex === "number" && key === "interviewDate") ||
@@ -494,60 +444,72 @@ export const JobFormModal = ({
             />
           </div>
 
-          <div className="bg-amber-100">
-            {interviews &&
-              interviews.map((interview, index) => {
-                return (
-                  <div>
-                    <div>
-                      <label htmlFor="Interview Round">Interview Round </label>
-                      <input
-                        className="w-full border p-2 rounded mb-2 bg-amber-100"
-                        id="interviewRound"
-                        type="text"
-                        placeholder="Interview Round"
-                        alt="Interview Round"
-                        onChange={(event) => {
-                          newJobChangeHandler("interviewRound", event, index)
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="Interview Date">Interview Date</label>
-                      <input
-                        className="w-full border p-2 rounded mb-2 bg-amber-100"
-                        id="interviewDate"
-                        type="date"
-                        alt="interviewDate"
-                        onChange={(event) => {
-                          newJobChangeHandler("interviewDate", event, index)
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="Interview Notes">Interview Notes</label>
-                      <textarea
-                        className="w-full border p-2 rounded mb-2 bg-amber-100"
-                        id="interviewNotes"
-                        rows={2}
-                        onChange={(event) => {
-                          newJobChangeHandler("interviewNotes", event, index)
-                        }}
-                      />
-                    </div>
-                  </div>
-                )
-              })}
-
-            <Button
-              text="Add Interview"
-              onClickHandler={() => {
-                console.log("addd more form ")
-                setInterviews((prev) => {
-                  return [...prev, "1"]
-                })
+          <div className=" bg-amber-100">
+            <div
+              onClick={() => {
+                setInterviews((prev) => [...prev, "1"])
               }}
-            />
+            >
+              Interview
+            </div>
+            {interviews.length > 0 && (
+              <div>
+                {interviews.map((interview, index) => {
+                  return (
+                    <div>
+                      <div>
+                        <label htmlFor="Interview Round">
+                          Interview Round{" "}
+                        </label>
+                        <input
+                          className="w-full border p-2 rounded mb-2 bg-amber-100"
+                          id="interviewRound"
+                          type="text"
+                          placeholder="Interview Round"
+                          alt="Interview Round"
+                          onChange={(event) => {
+                            newJobChangeHandler("interviewRound", event, index)
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="Interview Date">Interview Date</label>
+                        <input
+                          className="w-full border p-2 rounded mb-2 bg-amber-100"
+                          id="interviewDate"
+                          type="date"
+                          alt="interviewDate"
+                          onChange={(event) => {
+                            newJobChangeHandler("interviewDate", event, index)
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="Interview Notes">Interview Notes</label>
+                        <textarea
+                          className="w-full border p-2 rounded mb-2 bg-amber-100"
+                          id="interviewNotes"
+                          rows={2}
+                          onChange={(event) => {
+                            newJobChangeHandler("interviewNotes", event, index)
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )
+                })}
+
+                <Button
+                  text="Add Interview"
+                  onClickHandler={() => {
+                    console.log("addd more form ")
+                    setInterviews((prev) => {
+                      return [...prev, "1"]
+                    })
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
