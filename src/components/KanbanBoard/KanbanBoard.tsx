@@ -135,8 +135,6 @@ export const KanbanBoard = () => {
           (jobId) => jobId === over.id
         )
 
-        console.log("old index", oldIndex, "newindex: ", newIndex)
-
         updatedFromColumn.jobs = arrayMove(
           updatedFromColumn.jobs,
           oldIndex,
@@ -147,7 +145,7 @@ export const KanbanBoard = () => {
     })
   }
 
-  console.log("Job: ", jobs[0])
+  // console.log("Job: ", jobs[0])
   return (
     <div className="h-full bg-red-200 flex flex-col">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
