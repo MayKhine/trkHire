@@ -3,6 +3,7 @@ import { Button } from "../buttons/Button"
 import { RadioButton } from "../buttons/RadioButton"
 import { DropDownButton } from "../buttons/DropDownButton"
 import { interviewType, jobApplicationType } from "../../utils/types"
+import { ExpendButton } from "../buttons/ExpendButton"
 
 type JobFormModalProps = {
   onCancleHandler: () => void
@@ -17,7 +18,9 @@ export const JobFormModal = ({
 }: JobFormModalProps) => {
   const [statusDropDownToggle, setStatusDropDownToggle] = useState(false)
   const [jobTypeDropDownToggle, setJobTypeDropDownToggle] = useState(false)
-  const [interviews, setInterviews] = useState<Array<string>>([])
+  const [interviewExpendToggle, setInterviewExpendToggle] = useState(false)
+  const [interviews, setInterviews] = useState<Array<string>>(["1"])
+
   const statusMap: Record<string, string> = {
     saved: "Saved",
     applied: "Applied",
@@ -444,15 +447,15 @@ export const JobFormModal = ({
             />
           </div>
 
-          <div className=" bg-amber-100">
-            <div
-              onClick={() => {
-                setInterviews((prev) => [...prev, "1"])
+          <div className="bg-amber-100">
+            <ExpendButton
+              onClickHandler={() => {
+                setInterviewExpendToggle(!interviewExpendToggle)
               }}
-            >
-              Interview
-            </div>
-            {interviews.length > 0 && (
+              expendToggle={interviewExpendToggle}
+            />
+
+            {interviewExpendToggle && (
               <div>
                 {interviews.map((interview, index) => {
                   return (
