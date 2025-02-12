@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { JobApplicationType } from "../../utils/types"
+import { jobApplicationType } from "../../utils/types"
 // import { jobColumns } from "../../utils/data"
 import { jobByStatusColumns } from "../../utils/data"
 
@@ -19,7 +19,7 @@ export const KanbanBoard = () => {
   const [columns, setColumns] = useState(jobByStatusColumns)
   const [jobs, setJobs] = useState(initialJobs)
 
-  const [activeJob, setActiveJob] = useState<JobApplicationType | null>(null)
+  const [activeJob, setActiveJob] = useState<jobApplicationType | null>(null)
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveJob(event.active.data.current?.job)
