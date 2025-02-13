@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @tailwind utilities;
 
 html,
@@ -7,4 +8,18 @@ body,
   margin: 0;
   height: 100%;
   width: 100%;
+}
+
+@theme {
+  --color-darkBlue: #072ac8;
+  --color-blue: #1e96fc;
+  --color-lightBlue2: #a2d6f9;
+  --color-lightBlue1: #e3f4ff;
+
+  --color-darkYellow: #ffc600;
+  --color-yellow: #fffa72;
+  --color-lightYellow: #fffdcf;
+
+  --color-offWhite: #fffefb;
+  --color-darkGray: #1f203e;
 }

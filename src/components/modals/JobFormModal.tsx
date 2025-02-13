@@ -108,8 +108,8 @@ export const JobFormModal = ({
   }
 
   return (
-    <div className="w-full h-full z-10 absolute left-0 top-0 flex justify-center bg-sky-500/30 items-center">
-      <div className="w-4/5 min-h-150 bg-amber-400 flex flex-col p-10">
+    <div className="w-full min-h-screen  z-10 absolute left-0 top-0 overflow-y-auto flex justify-center bg-sky-500/30 items-center">
+      <div className="w-3/5 min-w-100 bg-amber-400 flex flex-col p-10 mt-10 mb-10">
         <div className="flex-grow flex w-full bg-pink-200  flex-col">
           <div>
             <label htmlFor="job title">Job Title</label>

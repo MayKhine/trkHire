@@ -29,29 +29,6 @@ export const KanbanBoard = () => {
     const { active, over } = event
     if (!over) return
 
-    // console.log(
-    //   "active. ",
-    //   active,
-    //   active.data.current?.colId,
-    //   "over",
-    //   over.data.current?.colId
-    // )
-
-    // const fromColumn = columns.find((col) =>
-    //   col.jobs.some((job) => job.id === active.id)
-    // )
-
-    // const fromColumn = columns.find((col) =>
-    //   col.jobs.some((job) => job.id === active.id)
-    // )
-
-    // const toColumn = columns.find((col) =>
-    //   col.jobs.some((job) => job.id === over.id)
-    // )
-
-    // const fromColumnId = fromColumn?.id
-    // let toColumnId = toColumn?.id
-
     const fromColumnId = active.data.current?.colId
     let toColumnId = over.data.current?.colId
 
@@ -65,12 +42,6 @@ export const KanbanBoard = () => {
       const updatedToColumn = updated.find((col) => col.id === toColumnId)
 
       if (!updatedFromColumn || !updatedToColumn) return prev
-
-      // Move the job to a new column
-      // const job = updatedFromColumn.jobs.find((j) => j.id === active.id)
-      // updatedFromColumn.jobs = updatedFromColumn.jobs.filter(
-      //   (j) => j.id !== active.id
-      // )
 
       const job = updatedFromColumn.jobs.find((jobId) => jobId === active.id)
       updatedFromColumn.jobs = updatedFromColumn.jobs.filter(
@@ -97,17 +68,6 @@ export const KanbanBoard = () => {
 
     const { active, over } = event
     if (!over) return
-
-    // const fromColumn = columns.find((col) =>
-    //   col.jobs.some((job) => job.id === active.id)
-    // )
-
-    // const toColumn = columns.find((col) =>
-    //   col.jobs.some((job) => job.id === over.id)
-    // )
-
-    // const fromColumnId = fromColumn?.id
-    // const toColumnId = toColumn?.id
 
     const fromColumnId = active.data.current?.colId
     const toColumnId = over.data.current?.colId
@@ -145,16 +105,16 @@ export const KanbanBoard = () => {
     })
   }
 
-  // console.log("Job: ", jobs[0])
+  console.log("Job: ", jobs)
   return (
-    <div className="h-full bg-red-200 flex flex-col">
+    <div className="h-full bg-blue flex flex-col text-darkGray">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
       <DndContext
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-6 p-6 bg-pink-100 h-full">
+        <div className="flex gap-6 p-6 bg-darkBlue h-full">
           {columns.map((column) => (
             <KanbanColumn key={column.id} column={column} />
           ))}
