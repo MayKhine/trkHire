@@ -5,6 +5,7 @@ import { DropDownButton } from "../buttons/DropDownButton"
 import { interviewType, jobApplicationType } from "../../utils/types"
 import { ExpendButton } from "../buttons/ExpendButton"
 import { DeleteButton } from "../buttons/DeleteButton"
+import { JobFormInput } from "../forms/JobFormInput"
 
 type JobFormModalProps = {
   onCancleHandler: () => void
@@ -113,48 +114,36 @@ export const JobFormModal = ({
         <div className="min-w-100 w-4/5 max-w-150 max-h-[90%] bg-offWhite rounded-xl flex flex-col pt-5 pb-5 mt-10 mb-10 ">
           <div className="font-bold text-lg 0 pl-10 pb-5"> Add a job</div>
           <div className="overflow-y-scroll max-h-[90%]">
-            <div className="flex-grow flex w-full   flex-col pl-10 pr-10">
-              <div>
-                <label htmlFor="job title">Job Title</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="title"
-                  type="text"
-                  placeholder="Job Title"
-                  alt="Job Title"
-                  onChange={(event) => {
-                    newJobChangeHandler("title", event)
-                  }}
-                />
-              </div>
+            <div className="flex-grow flex w-full   flex-col pl-10 pr-10 ">
+              <JobFormInput
+                id="title"
+                labelText="Job Title"
+                placeHolder="Job Title"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("title", event)
+                }}
+                type="text"
+              />
 
-              <div>
-                <label htmlFor="company name">Company Name</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="company"
-                  type="text"
-                  placeholder="Company"
-                  alt="Company"
-                  onChange={(event) => {
-                    newJobChangeHandler("company", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="company"
+                labelText="Company Name"
+                placeHolder="Company Name"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("company", event)
+                }}
+                type="text"
+              />
 
-              <div>
-                <label htmlFor="job URL">Job URL</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="jobLink"
-                  type="text"
-                  placeholder="Job Link"
-                  alt="Job Link"
-                  onChange={(event) => {
-                    newJobChangeHandler("jobLink", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="jobLink"
+                labelText="Job URL"
+                placeHolder="Job URL"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("jobLink", event)
+                }}
+                type="text"
+              />
 
               <div
                 className="w-full  relative  flex flex-col"
@@ -164,7 +153,7 @@ export const JobFormModal = ({
               >
                 <div>
                   <label htmlFor="status">Status</label>
-                  <div className="w-full border p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
+                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
                     <div
                       onClick={() => {
                         console.log("to do : open the drop down")
@@ -269,33 +258,25 @@ export const JobFormModal = ({
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="salary">Salary</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="salary"
-                  type="text"
-                  placeholder=""
-                  alt="Salary"
-                  onChange={(event) => {
-                    newJobChangeHandler("salary", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="salary"
+                labelText="Salary"
+                placeHolder="Salary"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("salary", event)
+                }}
+                type="text"
+              />
 
-              <div>
-                <label htmlFor="location">Location</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="location"
-                  type="text"
-                  placeholder="Location"
-                  alt="Location"
-                  onChange={(event) => {
-                    newJobChangeHandler("location", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="location"
+                labelText="Location"
+                placeHolder="Location"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("location", event)
+                }}
+                type="text"
+              />
 
               <div
                 className="w-full  relative  flex flex-col"
@@ -306,7 +287,7 @@ export const JobFormModal = ({
                 <div>
                   <label htmlFor="job type">Job Type</label>
 
-                  <div className="w-full border p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
+                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
                     <div
                       onClick={() => {
                         setJobTypeDropDownToggle(!jobTypeDropDownToggle)
@@ -362,7 +343,7 @@ export const JobFormModal = ({
               <div>
                 <label htmlFor="notes">Notes</label>
                 <textarea
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                  className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
                   id="notes"
                   placeholder="Notes"
                   rows={2}
@@ -372,45 +353,35 @@ export const JobFormModal = ({
                 />
               </div>
 
-              <div>
-                <label htmlFor="deadline">Application Deadline</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="deadline"
-                  type="date"
-                  placeholder="deadline"
-                  alt="Application Deadline"
-                  onChange={(event) => {
-                    newJobChangeHandler("deadline", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="deadline"
+                labelText="Application Deadline"
+                placeHolder="Application Deadline"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("deadline", event)
+                }}
+                type="date"
+              />
 
-              <div>
-                <label htmlFor="job apply date">Applied Date</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="appliedDate"
-                  type="date"
-                  alt="Applied Date"
-                  onChange={(event) => {
-                    newJobChangeHandler("appliedDate", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="appliedDate"
+                labelText="Applied Date"
+                placeHolder="Applied Date"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("appliedDate", event)
+                }}
+                type="date"
+              />
 
-              <div>
-                <label htmlFor="follow up date">Follow Up Date</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                  id="followUpDate"
-                  type="date"
-                  alt="Follow Up Date"
-                  onChange={(event) => {
-                    newJobChangeHandler("followUpDate", event)
-                  }}
-                />
-              </div>
+              <JobFormInput
+                id="followUpDate"
+                labelText="Follow Up Date"
+                placeHolder="Follow Up Date"
+                onChangeHandler={(event) => {
+                  newJobChangeHandler("followUpDate", event)
+                }}
+                type="date"
+              />
 
               <div>
                 <label htmlFor="contact">Contact</label>
@@ -422,36 +393,30 @@ export const JobFormModal = ({
                 />
                 {contactExpendToggle && (
                   <div>
-                    <div>
-                      <label htmlFor="contact">Contact Name</label>
-                      <input
-                        className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                        id="contactName"
-                        type="text"
-                        placeholder="Contact Name"
-                        alt="Location"
-                        onChange={(event) => {
-                          newJobChangeHandler("contactName", event)
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="contact">Contact</label>
-                      <input
-                        className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                        id="contact"
-                        type="text"
-                        placeholder="Email, Phone, ..."
-                        alt="Location"
-                        onChange={(event) => {
-                          newJobChangeHandler("contact", event)
-                        }}
-                      />
-                    </div>
+                    <JobFormInput
+                      id="contactName"
+                      labelText="Contact Name"
+                      placeHolder="Contact Name"
+                      onChangeHandler={(event) => {
+                        newJobChangeHandler("contactName", event)
+                      }}
+                      type="text"
+                    />
+
+                    <JobFormInput
+                      id="contact"
+                      labelText="Contact"
+                      placeHolder="Email, Phone Number, ..."
+                      onChangeHandler={(event) => {
+                        newJobChangeHandler("contact", event)
+                      }}
+                      type="text"
+                    />
+
                     <div>
                       <label htmlFor="contact">Contact Notes</label>
                       <textarea
-                        className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                        className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
                         id="contact"
                         rows={2}
                         onChange={(event) => {
@@ -463,8 +428,8 @@ export const JobFormModal = ({
                 )}
               </div>
 
-              <div className="">
-                <label htmlFor="interview">Interview</label>
+              <div>
+                <label htmlFor="interview">Interviews</label>
                 <ExpendButton
                   onClickHandler={() => {
                     setInterviewExpendToggle(!interviewExpendToggle)
@@ -473,60 +438,48 @@ export const JobFormModal = ({
                 />
 
                 {interviewExpendToggle && (
-                  <div>
+                  <div className="flex flex-col gap-10">
                     {interviews.map((interview, index) => {
                       return (
-                        <div>
-                          <div>
-                            <div>
-                              <label htmlFor="Interview Round">
-                                Interview Round {index + 1}
-                              </label>
-                              <DeleteButton
-                                onClickHandler={() => {
-                                  console.log("to do , delete the interview ")
-                                }}
-                              />
-                            </div>
-                            <input
-                              className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                              id="interviewRound"
-                              type="text"
-                              placeholder="Interview Round"
-                              alt="Interview Round"
-                              onChange={(event) => {
-                                newJobChangeHandler(
-                                  "interviewRound",
-                                  event,
-                                  index
-                                )
+                        <div className="bg-pink-100">
+                          <div className="mb-2 flex justify-between">
+                            <div> Interview Round {index + 1}</div>
+                            <DeleteButton
+                              onClickHandler={() => {
+                                console.log("wrok on delete")
                               }}
                             />
                           </div>
-                          <div>
-                            <label htmlFor="Interview Date">
-                              Interview Date
-                            </label>
-                            <input
-                              className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
-                              id="interviewDate"
-                              type="date"
-                              alt="interviewDate"
-                              onChange={(event) => {
-                                newJobChangeHandler(
-                                  "interviewDate",
-                                  event,
-                                  index
-                                )
-                              }}
-                            />
-                          </div>
+                          <JobFormInput
+                            id="interviewRound"
+                            labelText="Interview"
+                            placeHolder="Phone Interview"
+                            onChangeHandler={(event) => {
+                              newJobChangeHandler(
+                                "interviewRound",
+                                event,
+                                index
+                              )
+                            }}
+                            type="text"
+                          />
+
+                          <JobFormInput
+                            id="interviewDate"
+                            labelText="Interview Date"
+                            placeHolder="Interview Date"
+                            onChangeHandler={(event) => {
+                              newJobChangeHandler("interviewDate", event, index)
+                            }}
+                            type="date"
+                          />
+
                           <div>
                             <label htmlFor="Interview Notes">
                               Interview Notes
                             </label>
                             <textarea
-                              className="w-full border p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                              className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
                               id="interviewNotes"
                               rows={2}
                               onChange={(event) => {
@@ -557,7 +510,7 @@ export const JobFormModal = ({
             </div>
           </div>
 
-          <div className="flex justify-evenly w-full bg-green-300">
+          <div className="flex justify-evenly w-full pt-5 border-t-1 ">
             <Button text="Cancel" onClickHandler={onCancleHandler} />
             <Button
               text="Add"
