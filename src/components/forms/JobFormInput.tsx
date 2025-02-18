@@ -16,7 +16,7 @@ export const JobFormInput = ({
     <div>
       <label htmlFor={labelText}>{labelText}</label>
       <input
-        className="w-full h-11 box-border outline-none border pl-2 border-lightGray hover:border-blue hover:border-2 focus:border-blue focus:border-2 rounded mb-2 bg-lightYellow/30 mt-1"
+        className="w-full h-11 box-border outline-none border pl-2 border-lightGray hover:border-blue hover:border-2 focus:border-blue/10 focus:border-2 bg-offWhite rounded mb-2  mt-1"
         id={id}
         type={type}
         placeholder={placeHolder}

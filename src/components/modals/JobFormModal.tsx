@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button } from "../buttons/Button"
 import { RadioButton } from "../buttons/RadioButton"
 import { DropDownButton } from "../buttons/DropDownButton"
-import { interviewType, jobApplicationType } from "../../utils/types"
+import { jobApplicationType, jobStatusType } from "../../utils/types"
 import { ExpendButton } from "../buttons/ExpendButton"
 import { DeleteButton } from "../buttons/DeleteButton"
 import { JobFormInput } from "../forms/JobFormInput"
@@ -10,13 +10,14 @@ import { JobFormInput } from "../forms/JobFormInput"
 type JobFormModalProps = {
   onCancleHandler: () => void
   onAddHandler: () => void
+  jobStatus?: jobStatusType
 }
 
-type jobStatusType = "saved" | "applied" | "interview" | "offer" | "rejected"
-type priorityType = "low" | "medium" | "high"
+// type priorityType = "low" | "medium" | "high"
 export const JobFormModal = ({
   onCancleHandler,
   onAddHandler,
+  jobStatus,
 }: JobFormModalProps) => {
   const [statusDropDownToggle, setStatusDropDownToggle] = useState(false)
   const [jobTypeDropDownToggle, setJobTypeDropDownToggle] = useState(false)
@@ -51,7 +52,7 @@ export const JobFormModal = ({
     jobLink: "",
     company: "",
     priority: "medium",
-    status: "saved",
+    status: jobStatus ? jobStatus : "saved",
     archive: false,
     type: "full",
     interviews: [{}],
@@ -62,7 +63,9 @@ export const JobFormModal = ({
 
   const newJobChangeHandler = (
     key: string,
-    event: any,
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
     interviewIndex?: number
   ) => {
     if (
@@ -71,38 +74,6 @@ export const JobFormModal = ({
       (typeof interviewIndex === "number" && key === "interviewNotes")
     ) {
       const tempKey = interviewMap[key]
-      // const tempInterview = { [tempKey]: event.target.value }
-
-      // setNewJob((prev) => {
-      //   const updatedInterviews = prev.interviews ? [...prev.interviews] : []
-
-      //   // If interviews is undefined, initialize it
-      //   if (!prev.interviews) {
-      //     return { ...prev, interviews: [tempInterview] }
-      //   }
-
-      //   // if (interviews.length == 1) {
-      //   //   return { ...prev, interviews: [tempInterview] }
-      //   // }
-
-      //   // If index is undefined, add a new entry
-      //   else if (
-      //     updatedInterviews.length > 0 &&
-      //     interviews.length > 0 &&
-      //     !updatedInterviews[interviewIndex]
-      //   ) {
-      //     updatedInterviews.push(tempInterview)
-      //     return { ...prev, interviews: updatedInterviews }
-      //   }
-      //   // else, update the existing interview object
-      //   else {
-      //     updatedInterviews[interviewIndex] = {
-      //       ...updatedInterviews[interviewIndex],
-      //       [tempKey]: event.target.value,
-      //     }
-      //     return { ...prev, interviews: updatedInterviews }
-      //   }
-      // })
 
       setNewJob((prev) => {
         const updatedInterviews = prev.interviews ? [...prev.interviews] : []
@@ -124,22 +95,26 @@ export const JobFormModal = ({
 
   const createJob = () => {
     console.log("New job: ", newJob)
+    onAddHandler()
   }
 
-  const deleteInterview = (index: number) => {
-    console.log(
-      "delete interview from the interviews array and newJob stat",
-      newJob.interviews,
-      interviews,
-      "delete index: ",
-      index
-    )
+  const deleteInterview = (indexToDelete: number) => {
+    setInterviews((prev) => {
+      return [...prev.filter((_, index) => index != indexToDelete)]
+    })
+
+    setNewJob((prev) => {
+      return {
+        ...prev,
+        interviews: prev.interviews?.filter(
+          (_, index) => index != indexToDelete
+        ),
+      }
+    })
   }
 
   const addInterviewToNewJob = () => {
     console.log("add interview to the structure.")
-    // initialize the interview in newJob
-
     setInterviews((prev) => {
       return [...prev, "1"]
     })
@@ -153,10 +128,12 @@ export const JobFormModal = ({
   return (
     <div className="fixed inset-0 z-10 bg-darkGray/50 text-darkGray ">
       <div className="w-full h-full flex justify-center  items-center">
-        <div className="min-w-100 w-4/5 max-w-150 max-h-[90%] bg-offWhite rounded-xl flex flex-col pt-5 pb-5 mt-10 mb-10 ">
-          <div className="font-bold text-lg 0 pl-10 pb-5 "> Add a job</div>
-          <div className="overflow-y-scroll max-h-[90%] pb-5">
-            <div className="flex-grow flex w-full   flex-col pl-10 pr-10 ">
+        <div className="min-w-100 w-4/5 max-w-150 max-h-[90%] bg-offWhite rounded-xl flex flex-col pt-5 pb-5 mt-10 mb-10  ">
+          <div className="font-bold text-lg 0 pl-10 pb-5 border-b-1 border-lightGray">
+            Add a job
+          </div>
+          <div className="overflow-y-scroll max-h-[90%] pb-5 ">
+            <div className="flex-grow flex w-full flex-col pl-10 pr-10 pt-5">
               <JobFormInput
                 id="title"
                 labelText="Job Title"
@@ -195,7 +172,7 @@ export const JobFormModal = ({
               >
                 <div>
                   <label htmlFor="status">Status</label>
-                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
+                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-offWhite mt-1">
                     <div
                       onClick={() => {
                         console.log("to do : open the drop down")
@@ -329,7 +306,7 @@ export const JobFormModal = ({
                 <div>
                   <label htmlFor="job type">Job Type</label>
 
-                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-lightYellow/30 mt-1">
+                  <div className="w-full border border-lightGray p-2 rounded mb-2 cursor-pointer bg-offWhite mt-1">
                     <div
                       onClick={() => {
                         setJobTypeDropDownToggle(!jobTypeDropDownToggle)
@@ -385,11 +362,11 @@ export const JobFormModal = ({
               <div>
                 <label htmlFor="notes">Notes</label>
                 <textarea
-                  className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                  className="w-full border border-lightGray  p-2 rounded mb-2 bg-offWhite mt-1"
                   id="notes"
                   placeholder="Notes"
                   rows={2}
-                  onChange={(event) => {
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                     newJobChangeHandler("notes", event)
                   }}
                 />
@@ -467,7 +444,7 @@ export const JobFormModal = ({
                     <div>
                       <label htmlFor="contact">Contact Notes</label>
                       <textarea
-                        className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                        className="w-full border border-lightGray  p-2 rounded mb-2 bg-offWhite mt-1"
                         id="contact"
                         rows={2}
                         onChange={(event) => {
@@ -505,7 +482,7 @@ export const JobFormModal = ({
                     {interviews.map((interview, index) => {
                       return (
                         <div>
-                          <div className="mb-2 flex justify-between bg-amber-200">
+                          <div className="mb-2 flex justify-between">
                             <div> Interview Round {index + 1}</div>
                             <DeleteButton
                               onClickHandler={() => {
@@ -542,7 +519,7 @@ export const JobFormModal = ({
                               Interview Notes
                             </label>
                             <textarea
-                              className="w-full border border-lightGray  p-2 rounded mb-2 bg-lightYellow/30 mt-1"
+                              className="w-full border border-lightGray  p-2 rounded mb-2 bg-offWhite mt-1"
                               id="interviewNotes"
                               rows={2}
                               onChange={(event) => {
@@ -558,21 +535,18 @@ export const JobFormModal = ({
                       )
                     })}
 
-                    <div className="mb-5">
-                      <Button
-                        text="Add Interview"
-                        onClickHandler={() => {
-                          addInterviewToNewJob()
-                        }}
-                      />
-                    </div>
+                    <Button
+                      text="Add Interview"
+                      onClickHandler={() => {
+                        addInterviewToNewJob()
+                      }}
+                    />
                   </div>
                 )}
               </div>
             </div>
           </div>
-
-          <div className="flex justify-evenly w-full pt-5 border-t-1 ">
+          <div className="flex justify-evenly w-full pt-5 border-t-1 border-lightGray ">
             <Button text="Cancel" onClickHandler={onCancleHandler} />
             <Button
               text="Add"

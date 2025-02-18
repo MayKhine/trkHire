@@ -50,6 +50,7 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
           onCancleHandler={() => {
             setJobFormModalToggle(false)
           }}
+          jobStatus={column.id}
         ></JobFormModal>
       )}
     </div>

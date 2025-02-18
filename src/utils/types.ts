@@ -11,6 +11,13 @@ export type jobColumnType = {
   jobs: Array<jobType>
 }
 
+export type jobStatusType =
+  | "saved"
+  | "applied"
+  | "interview"
+  | "offer"
+  | "rejected"
+
 export type jobByStatusColumnsType = {
   id: "saved" | "applied" | "interview" | "offer" | "rejected"
   colTitle: string
