@@ -15,13 +15,13 @@ export const ExpendButton = ({
     <div>
       {!expendToggle && (
         <button onClick={onClickHandler} className="cursor-pointer">
-          <MdKeyboardDoubleArrowDown className="bg-pink-300 w-8 h-8" />
+          <MdKeyboardDoubleArrowDown size={20} className="h-6" />
         </button>
       )}
 
       {expendToggle && (
         <button onClick={onClickHandler} className="cursor-pointer">
-          <MdKeyboardDoubleArrowUp className="bg-pink-300 w-8 h-8" />
+          <MdKeyboardDoubleArrowUp size={20} className="h-6" />
         </button>
       )}
     </div>

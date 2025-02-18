@@ -54,10 +54,12 @@ export const JobFormModal = ({
     status: "saved",
     archive: false,
     type: "full",
+    interviews: [{}],
   })
 
   const statusText = statusMap[newJob.status]
   const jobTypeText = jobTypeMap[newJob.type]
+
   const newJobChangeHandler = (
     key: string,
     event: any,
@@ -69,31 +71,47 @@ export const JobFormModal = ({
       (typeof interviewIndex === "number" && key === "interviewNotes")
     ) {
       const tempKey = interviewMap[key]
-      const tempInterview = { [tempKey]: event.target.value }
+      // const tempInterview = { [tempKey]: event.target.value }
+
+      // setNewJob((prev) => {
+      //   const updatedInterviews = prev.interviews ? [...prev.interviews] : []
+
+      //   // If interviews is undefined, initialize it
+      //   if (!prev.interviews) {
+      //     return { ...prev, interviews: [tempInterview] }
+      //   }
+
+      //   // if (interviews.length == 1) {
+      //   //   return { ...prev, interviews: [tempInterview] }
+      //   // }
+
+      //   // If index is undefined, add a new entry
+      //   else if (
+      //     updatedInterviews.length > 0 &&
+      //     interviews.length > 0 &&
+      //     !updatedInterviews[interviewIndex]
+      //   ) {
+      //     updatedInterviews.push(tempInterview)
+      //     return { ...prev, interviews: updatedInterviews }
+      //   }
+      //   // else, update the existing interview object
+      //   else {
+      //     updatedInterviews[interviewIndex] = {
+      //       ...updatedInterviews[interviewIndex],
+      //       [tempKey]: event.target.value,
+      //     }
+      //     return { ...prev, interviews: updatedInterviews }
+      //   }
+      // })
 
       setNewJob((prev) => {
         const updatedInterviews = prev.interviews ? [...prev.interviews] : []
 
-        // If interviews is undefined, initialize it
-        if (!prev.interviews) {
-          return { ...prev, interviews: [tempInterview] }
+        updatedInterviews[interviewIndex] = {
+          ...updatedInterviews[interviewIndex],
+          [tempKey]: event.target.value,
         }
-        // If index is undefined, add a new entry
-        else if (
-          updatedInterviews.length > 0 &&
-          !updatedInterviews[interviewIndex]
-        ) {
-          updatedInterviews.push(tempInterview)
-          return { ...prev, interviews: updatedInterviews }
-        }
-        // else, update the existing interview object
-        else {
-          updatedInterviews[interviewIndex] = {
-            ...updatedInterviews[interviewIndex],
-            [tempKey]: event.target.value,
-          }
-          return { ...prev, interviews: updatedInterviews }
-        }
+        return { ...prev, interviews: updatedInterviews }
       })
       return
     }
@@ -108,12 +126,36 @@ export const JobFormModal = ({
     console.log("New job: ", newJob)
   }
 
+  const deleteInterview = (index: number) => {
+    console.log(
+      "delete interview from the interviews array and newJob stat",
+      newJob.interviews,
+      interviews,
+      "delete index: ",
+      index
+    )
+  }
+
+  const addInterviewToNewJob = () => {
+    console.log("add interview to the structure.")
+    // initialize the interview in newJob
+
+    setInterviews((prev) => {
+      return [...prev, "1"]
+    })
+
+    setNewJob((prev) => {
+      const tempInterviews = prev.interviews
+      return { ...prev, interviews: [...tempInterviews!, {}] }
+    })
+  }
+
   return (
     <div className="fixed inset-0 z-10 bg-darkGray/50 text-darkGray ">
       <div className="w-full h-full flex justify-center  items-center">
         <div className="min-w-100 w-4/5 max-w-150 max-h-[90%] bg-offWhite rounded-xl flex flex-col pt-5 pb-5 mt-10 mb-10 ">
-          <div className="font-bold text-lg 0 pl-10 pb-5"> Add a job</div>
-          <div className="overflow-y-scroll max-h-[90%]">
+          <div className="font-bold text-lg 0 pl-10 pb-5 "> Add a job</div>
+          <div className="overflow-y-scroll max-h-[90%] pb-5">
             <div className="flex-grow flex w-full   flex-col pl-10 pr-10 ">
               <JobFormInput
                 id="title"
@@ -384,13 +426,22 @@ export const JobFormModal = ({
               />
 
               <div>
-                <label htmlFor="contact">Contact</label>
-                <ExpendButton
-                  onClickHandler={() => {
+                <div
+                  className="flex"
+                  onClick={() => {
                     setContactExpendToggle(!contactExpendToggle)
                   }}
-                  expendToggle={contactExpendToggle}
-                />
+                >
+                  <label htmlFor="contact" className="cursor-pointer font-bold">
+                    Contact Info
+                  </label>
+                  <ExpendButton
+                    onClickHandler={() => {
+                      setContactExpendToggle(!contactExpendToggle)
+                    }}
+                    expendToggle={contactExpendToggle}
+                  />
+                </div>
                 {contactExpendToggle && (
                   <div>
                     <JobFormInput
@@ -429,24 +480,36 @@ export const JobFormModal = ({
               </div>
 
               <div>
-                <label htmlFor="interview">Interviews</label>
-                <ExpendButton
-                  onClickHandler={() => {
+                <div
+                  className="flex"
+                  onClick={() => {
                     setInterviewExpendToggle(!interviewExpendToggle)
                   }}
-                  expendToggle={interviewExpendToggle}
-                />
+                >
+                  <label
+                    htmlFor="interview"
+                    className="cursor-pointer font-bold"
+                  >
+                    Interview Info
+                  </label>
+                  <ExpendButton
+                    onClickHandler={() => {
+                      setInterviewExpendToggle(!interviewExpendToggle)
+                    }}
+                    expendToggle={interviewExpendToggle}
+                  />
+                </div>
 
                 {interviewExpendToggle && (
-                  <div className="flex flex-col gap-10">
+                  <div className="flex flex-col ">
                     {interviews.map((interview, index) => {
                       return (
-                        <div className="bg-pink-100">
-                          <div className="mb-2 flex justify-between">
+                        <div>
+                          <div className="mb-2 flex justify-between bg-amber-200">
                             <div> Interview Round {index + 1}</div>
                             <DeleteButton
                               onClickHandler={() => {
-                                console.log("wrok on delete")
+                                deleteInterview(index)
                               }}
                             />
                           </div>
@@ -495,15 +558,14 @@ export const JobFormModal = ({
                       )
                     })}
 
-                    <Button
-                      text="Add Interview"
-                      onClickHandler={() => {
-                        console.log("addd more form ")
-                        setInterviews((prev) => {
-                          return [...prev, "1"]
-                        })
-                      }}
-                    />
+                    <div className="mb-5">
+                      <Button
+                        text="Add Interview"
+                        onClickHandler={() => {
+                          addInterviewToNewJob()
+                        }}
+                      />
+                    </div>
                   </div>
                 )}
               </div>
