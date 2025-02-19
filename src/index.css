@@ -24,3 +24,11 @@ body,
   --color-darkGray: #1f203e;
   --color-lightGray: #a4a4a4;
 }
+
+.truncate-text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}

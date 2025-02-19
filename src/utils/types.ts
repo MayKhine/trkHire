@@ -39,7 +39,7 @@ export type jobApplicationType = {
   // department?: string // Department (Optional)
   salary?: string // Salary / Pay Range (if available)
   location?: string // Remote / Hybrid / On-site + City, State
-  type: "full" | "part" | "contract" | "internship" // Job Type
+  type?: "full" | "part" | "contract" | "internship" // Job Type
   deadline?: string // Application Deadline (Optional)
   appliedDate?: string // Date Applied (Optional if only saved)
   followUpDate?: string // Follow-up Reminder Date

@@ -1,79 +1,4 @@
-import {
-  JobApplicationType,
-  jobByStatusColumnsType,
-  jobColumnType,
-} from "./types"
-
-export const jobColumns: jobColumnType[] = [
-  {
-    id: "saved",
-    colTitle: "Saved",
-    jobs: [
-      { id: "1", title: "developer", company: "Google", location: "Boston" },
-      {
-        id: "2",
-        title: "developer 2",
-        company: "Google",
-        location: "Boston",
-      },
-    ],
-  },
-
-  {
-    id: "applied",
-    colTitle: "Applied",
-    jobs: [
-      {
-        id: "3",
-        title: "front end developer",
-        company: "Amazon",
-        location: "Boston",
-      },
-      {
-        id: "4",
-        title: "developer 2",
-        company: "Google",
-        location: "NY",
-      },
-    ],
-  },
-  {
-    id: "interview",
-    colTitle: "Interview",
-    jobs: [
-      {
-        id: "6",
-        title: "front end developer",
-        company: "Amazon",
-        location: "Boston",
-      },
-    ],
-  },
-  {
-    id: "offer",
-    colTitle: "Offer",
-    jobs: [
-      {
-        id: "7",
-        title: "front end developer",
-        company: "Amazon",
-        location: "Boston",
-      },
-    ],
-  },
-  {
-    id: "rejected",
-    colTitle: "Rejected",
-    jobs: [
-      {
-        id: "5",
-        title: "senior developer",
-        company: "Amazon",
-        location: "Boston",
-      },
-    ],
-  },
-]
+import { jobApplicationType, jobByStatusColumnsType } from "./types"
 
 export const jobByStatusColumns: Array<jobByStatusColumnsType> = [
   { id: "saved", colTitle: "Saved", jobs: ["abc1", "abc3", "abc8"] },
@@ -83,10 +8,44 @@ export const jobByStatusColumns: Array<jobByStatusColumnsType> = [
   { id: "rejected", colTitle: "Rejected", jobs: ["abc7"] },
 ]
 
-export const jobs: Array<JobApplicationType> = [
+export const columnsForJobTables = {
+  width: 150,
+  columns: [
+    {
+      id: "id",
+      text: "id",
+    },
+    {
+      id: "title",
+      text: "Title",
+    },
+    {
+      id: "company",
+      text: "Company",
+    },
+    {
+      id: "jobLink",
+      text: "Job URL",
+    },
+    {
+      id: "priority",
+      text: "Priority",
+    },
+    {
+      id: "status",
+      text: "Status",
+    },
+    {
+      id: "archieve",
+      text: "Archieve",
+    },
+  ],
+}
+
+export const jobs: Array<jobApplicationType> = [
   {
     id: "abc1",
-    title: "Developer",
+    title: "DEVELOPERDEVELOPERDEVELOPER",
     company: "Google",
     jobLink: "test.com",
     priority: "high",

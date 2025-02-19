@@ -105,14 +105,14 @@ export const KanbanBoard = () => {
   }
 
   return (
-    <div className="h-full bg-blue flex flex-col text-darkGray">
+    <div className=" bg-blue flex flex-col  text-darkGray">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
       <DndContext
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-6 p-6 bg-darkBlue h-full">
+        <div className="flex gap-6 p-6 bg-darkBlue flex-grow">
           {columns.map((column) => (
             <KanbanColumn key={column.id} column={column} />
           ))}
