@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { jobApplicationType } from "../../utils/types"
-// import { jobColumns } from "../../utils/data"
 import { jobByStatusColumns } from "../../utils/data"
 
 import {
@@ -105,7 +104,6 @@ export const KanbanBoard = () => {
     })
   }
 
-  console.log("Job: ", jobs)
   return (
     <div className="h-full bg-blue flex flex-col text-darkGray">
       <div className="text-2xl font-bold p-6"> Job Tracker </div>
