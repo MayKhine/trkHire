@@ -4,27 +4,33 @@ import { columnsForJobTables, jobs } from "../../utils/data"
 
 export const JobTable = () => {
   // Handle resize stop event
-  const onResizeStop = (width: number) => {
-    columnsForJobTables.width = width
+  const onResizeStop = (id: string, width: number) => {
+    // columnsForJobTables.width = width
+    columnsForJobTables.map((col) => {
+      if (col.id == id) {
+        col.width = width
+        return
+      }
+    })
   }
 
   const jobKeys = Object.keys(jobs[0])
   console.log(jobKeys)
 
   return (
-    <div className="w-max">
+    <div className="w-max border-l-2 border-t-2 border-b-1 ml-6 mr-6">
       <div className="bg-offWhite">
         <div className="grid grid-flow-col w-max">
-          {columnsForJobTables.columns.map((col, index) => {
+          {columnsForJobTables.map((col, index) => {
             return (
               <ResizableJobItem
                 key={index}
                 id={col.id}
-                width={columnsForJobTables.width}
+                width={columnsForJobTables[index].width}
                 index={index}
                 text={col.text}
-                onResizeHandler={(width: number) => {
-                  onResizeStop(width)
+                onResizeHandler={(id: string, width: number) => {
+                  onResizeStop(id, width)
                 }}
               >
                 <div>

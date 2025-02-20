@@ -20,7 +20,7 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
   return (
     <div
       ref={setNodeRef}
-      className="w-64 bg-offWhite p-4 rounded-lg shadow-md min-h-[300px] "
+      className="w-64 min-w-64 bg-offWhite p-4 rounded-lg shadow-md min-h-[300px] "
     >
       <h2 className="text-lg font-bold mb-2">{column.colTitle}</h2>
 
