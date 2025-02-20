@@ -60,5 +60,5 @@ export type jobApplicationType = {
 
   interviews?: Array<interviewType>
 
-  offerDetails?: string // Offer Details (if applicable)
+  // offerDetails?: string // Offer Details (if applicable)
 }

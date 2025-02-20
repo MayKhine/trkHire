@@ -3,8 +3,8 @@ import { MenuButton } from "./MenuButton"
 
 export const MenuBar = () => {
   return (
-    <div className="bg-offWhite w-50 p-4 flex items-start">
-      <nav>
+    <div>
+      <nav className="flex flex-col bg-offWhite items-start bg-pink min-w-50 p-4 h-full">
         <NavLink to="/">
           <MenuButton text="Dashboard" />
         </NavLink>

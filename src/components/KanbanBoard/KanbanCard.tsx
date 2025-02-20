@@ -15,14 +15,16 @@ export const KanbanCard = ({ colId, job }: KanbanCardProps) => {
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className="bg-lightBlue1 p-3 rounded shadow cursor-grab hover:bg-lightBlue2 active:opacity-50"
+      className="bg-lightBlue1 p-3 rounded shadow cursor-grab hover:bg-lightBlue2 active:opacity-50 w-full"
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
       }}
     >
       <div> {job.id}</div>
-      <div> {job.title}</div>
+      <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap ">
+        {job.title}
+      </div>
       <div> {job.company}</div>
     </div>
   )

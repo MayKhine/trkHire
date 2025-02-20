@@ -18,7 +18,7 @@ export const ResizableJobItem = ({
 }: ResizableJobItemProps) => {
   return (
     <ResizableBox
-      className="bg-pink-200 flex"
+      className="flex"
       key={id}
       width={width}
       axis="x"
@@ -27,11 +27,11 @@ export const ResizableJobItem = ({
       // maxConstraints={[500, 400]}
       onResizeStop={(_, data) => onResizeHandler(data.size.width)}
       handle={
-        <div className="custom-handle text-amber-900 border-r-2 h-full cursor-grab "></div>
+        <div className="custom-handle text-pink-500 border-r-2 h-full cursor-grab z-10"></div>
       }
     >
-      <div className="w-full pr-4">
-        <div className="text-lg font-bold">{text}</div>
+      <div className="w-full">
+        <div className="text-lg font-bold border-b-2 p-2">{text}</div>
         {children}
       </div>
     </ResizableBox>

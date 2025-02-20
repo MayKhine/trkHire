@@ -14,30 +14,92 @@ export const columnsForJobTables = {
     {
       id: "id",
       text: "id",
+      width: 150,
     },
     {
       id: "title",
       text: "Title",
+      width: 150,
     },
     {
       id: "company",
       text: "Company",
+      width: 150,
     },
     {
       id: "jobLink",
       text: "Job URL",
+      width: 150,
     },
     {
       id: "priority",
       text: "Priority",
+      width: 150,
     },
     {
       id: "status",
       text: "Status",
+      width: 150,
     },
     {
       id: "archieve",
       text: "Archieve",
+      width: 150,
+    },
+    {
+      id: "notes",
+      text: "Notes",
+      width: 150,
+    },
+    {
+      id: "salary",
+      text: "Salary",
+      width: 150,
+    },
+    {
+      id: "location",
+      text: "Location",
+      width: 150,
+    },
+    {
+      id: "type",
+      text: "Type",
+      width: 150,
+    },
+    {
+      id: "deadline",
+      text: "Deadline",
+      width: 150,
+    },
+    {
+      id: "appliedDate",
+      text: "Applied Date",
+      width: 150,
+    },
+    {
+      id: "followUpDate",
+      text: "Follow Up Date",
+      width: 150,
+    },
+    {
+      id: "contactName",
+      text: "Contact Name",
+      width: 150,
+    },
+    {
+      id: "contact",
+      text: "Contact",
+      width: 150,
+    },
+    {
+      id: "contactNotes",
+      text: "Contact Notes",
+      width: 150,
+    },
+    {
+      id: "interviews",
+      text: "Interviews",
+      width: 150,
     },
   ],
 }
