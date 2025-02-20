@@ -59,7 +59,7 @@ export const JobFormModal = ({
   })
 
   const statusText = statusMap[newJob.status]
-  const jobTypeText = jobTypeMap[newJob.type]
+  const jobTypeText = jobTypeMap[newJob.type!]
 
   const newJobChangeHandler = (
     key: string,

@@ -4,7 +4,7 @@ import { MenuButton } from "./MenuButton"
 export const MenuBar = () => {
   return (
     <div>
-      <nav className="flex flex-col bg-offWhite items-start bg-pink min-w-50 p-4 h-full">
+      <nav className="flex flex-col bg-offWhite items-start bg-pink min-w-40 p-4 h-full border-2">
         <NavLink to="/">
           <MenuButton text="Dashboard" />
         </NavLink>

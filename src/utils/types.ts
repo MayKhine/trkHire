@@ -62,3 +62,5 @@ export type jobApplicationType = {
 
   // offerDetails?: string // Offer Details (if applicable)
 }
+
+export type reChartPieDataType = [{ name: string; value: number }]
