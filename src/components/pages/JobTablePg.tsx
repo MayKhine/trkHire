@@ -1,7 +1,5 @@
 import { useState } from "react"
 import { JobTable } from "../jobtable/JobTable"
-import { KanbanAddJobButton } from "../kanbanboard/KanbanAddJobButton"
-// import { Test } from "../jobtable/test"
 import { MenuBar } from "../menu/MenuBar"
 import { JobFormModal } from "../modals/JobFormModal"
 import { Button } from "../buttons/Button"
