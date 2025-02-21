@@ -4,6 +4,7 @@ type JobFromInputProps = {
   placeHolder: string
   id: string
   type: string
+  value?: string
 }
 export const JobFormInput = ({
   onChangeHandler,
@@ -11,7 +12,9 @@ export const JobFormInput = ({
   placeHolder,
   id,
   type,
-}: JobFromInputProps) => {
+  value,
+}: // val,
+JobFromInputProps) => {
   return (
     <div>
       <label htmlFor={labelText}>{labelText}</label>
@@ -24,6 +27,7 @@ export const JobFormInput = ({
         onChange={(event) => {
           onChangeHandler(event)
         }}
+        value={value}
       />
     </div>
   )

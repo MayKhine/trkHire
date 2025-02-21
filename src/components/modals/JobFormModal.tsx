@@ -25,6 +25,7 @@ export const JobFormModal = ({
   const [contactExpendToggle, setContactExpendToggle] = useState(false)
 
   const [interviews, setInterviews] = useState<Array<string>>(["1"])
+  // const [showInterviews, setShowInterviews] = useState<Array<string>>(["1"])
 
   const statusMap: Record<string, string> = {
     saved: "Saved",
@@ -46,6 +47,7 @@ export const JobFormModal = ({
     interviewDate: "date",
     interviewNotes: "notes",
   }
+
   const [newJob, setNewJob] = useState<jobApplicationType>({
     id: "",
     title: "",
@@ -55,7 +57,15 @@ export const JobFormModal = ({
     status: jobStatus ? jobStatus : "saved",
     archive: false,
     type: "full",
-    interviews: [{}],
+    interviewRound1: "",
+    interviewDate1: "",
+    interviewNotes1: "",
+    interviewRound2: "",
+    interviewDate2: "",
+    interviewNotes2: "",
+    interviewRound3: "",
+    interviewDate3: "",
+    interviewNotes3: "",
   })
 
   const statusText = statusMap[newJob.status]
@@ -65,27 +75,27 @@ export const JobFormModal = ({
     key: string,
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-    interviewIndex?: number
+      | React.ChangeEvent<HTMLTextAreaElement>
+    // interviewIndex?: number
   ) => {
-    if (
-      (typeof interviewIndex === "number" && key === "interviewRound") ||
-      (typeof interviewIndex === "number" && key === "interviewDate") ||
-      (typeof interviewIndex === "number" && key === "interviewNotes")
-    ) {
-      const tempKey = interviewMap[key]
+    // if (
+    //   (typeof interviewIndex === "number" && key === "interviewRound") ||
+    //   (typeof interviewIndex === "number" && key === "interviewDate") ||
+    //   (typeof interviewIndex === "number" && key === "interviewNotes")
+    // ) {
+    //   const tempKey = interviewMap[key]
 
-      setNewJob((prev) => {
-        const updatedInterviews = prev.interviews ? [...prev.interviews] : []
+    //   setNewJob((prev) => {
+    //     const updatedInterviews = prev.interviews ? [...prev.interviews] : []
 
-        updatedInterviews[interviewIndex] = {
-          ...updatedInterviews[interviewIndex],
-          [tempKey]: event.target.value,
-        }
-        return { ...prev, interviews: updatedInterviews }
-      })
-      return
-    }
+    //     updatedInterviews[interviewIndex] = {
+    //       ...updatedInterviews[interviewIndex],
+    //       [tempKey]: event.target.value,
+    //     }
+    //     return { ...prev, interviews: updatedInterviews }
+    //   })
+    //   return
+    // }
 
     setNewJob((prev) => {
       return { ...prev, [key]: event.target.value }
@@ -98,32 +108,57 @@ export const JobFormModal = ({
     onAddHandler()
   }
 
-  const deleteInterview = (indexToDelete: number) => {
-    setInterviews((prev) => {
-      return [...prev.filter((_, index) => index != indexToDelete)]
-    })
+  // const deleteInterview = (indexToDelete: number) => {
 
-    setNewJob((prev) => {
-      return {
-        ...prev,
-        interviews: prev.interviews?.filter(
-          (_, index) => index != indexToDelete
-        ),
-      }
-    })
-  }
+  //   setInterviews((prev) => {
+  //     return [...prev.filter((_, index) => index != indexToDelete)]
+  //   })
 
-  const addInterviewToNewJob = () => {
-    console.log("add interview to the structure.")
-    setInterviews((prev) => {
-      return [...prev, "1"]
-    })
+  //   setNewJob((prev) => {
+  //     return {
+  //       ...prev,
+  //       interviews: prev.interviews?.filter(
+  //         (_, index) => index != indexToDelete
+  //       ),
+  //     }
+  //   })
+  // }
 
-    setNewJob((prev) => {
-      const tempInterviews = prev.interviews
-      return { ...prev, interviews: [...tempInterviews!, {}] }
-    })
-  }
+  // const addInterviewToNewJob = () => {
+  //   if (interviews.length >= 3) return
+
+  //   setNewJob((prev) => {
+  //     if (interviews.length + 1 == 2) {
+  //       return {
+  //         ...prev,
+  //         interviewRound2: "",
+  //         interviewDate2: "",
+  //         interviewNotes2: "",
+  //       }
+  //     }
+
+  //     if (interviews.length + 1 == 3) {
+  //       return {
+  //         ...prev,
+  //         interviewRound3: "",
+  //         interviewDate3: "",
+  //         interviewNotes3: "",
+  //       }
+  //     }
+  //     setInterviews((prev) => {
+  //       return [...prev, "1"]
+  //     })
+  //   })
+
+  //   setInterviews((prev) => {
+  //     return [...prev, "1"]
+  //   })
+
+  //   // setNewJob((prev) => {
+  //   //   const tempInterviews = prev.interviews
+  //   //   return { ...prev, interviews: [...tempInterviews!, {}] }
+  //   // })
+  // }
 
   return (
     <div className="fixed inset-0 z-10 bg-darkGray/50 text-darkGray ">
@@ -479,14 +514,44 @@ export const JobFormModal = ({
 
                 {interviewExpendToggle && (
                   <div className="flex flex-col ">
-                    {interviews.map((interview, index) => {
+                    {interviews.map((_, index) => {
+                      const keyC = "interviewNotes" + (index + 1)
+                      const keyA = "interviewRound" + (index + 1)
+                      const keyB = "interviewDate" + (index + 1)
+
                       return (
-                        <div>
+                        <div key={index}>
                           <div className="mb-2 flex justify-between">
                             <div> Interview Round {index + 1}</div>
                             <DeleteButton
                               onClickHandler={() => {
-                                deleteInterview(index)
+                                console.log("clear the info not delete ")
+                                // const keyA = "interviewRound" + (index + 1)
+                                // const keyB = "interviewDate" + (index + 1)
+                                // const keyC = "interviewNotes" + (index + 1)
+
+                                setNewJob((prev) => {
+                                  return {
+                                    ...prev,
+                                    [keyA]: "",
+                                    [keyB]: "",
+                                    [keyC]: "",
+                                  }
+                                })
+
+                                // setInterviews((prev) => {
+                                //   return [
+                                //     ...prev.filter(
+                                //       (_, indexX) => indexX != index
+                                //     ),
+                                //   ]
+                                // })
+
+                                // console.log(
+                                //   "what is after delete: ",
+                                //   newJob,
+                                //   interviews
+                                // )
                               }}
                             />
                           </div>
@@ -495,13 +560,12 @@ export const JobFormModal = ({
                             labelText="Interview"
                             placeHolder="Phone Interview"
                             onChangeHandler={(event) => {
-                              newJobChangeHandler(
-                                "interviewRound",
-                                event,
-                                index
-                              )
+                              newJobChangeHandler(keyA, event)
                             }}
                             type="text"
+                            value={String(
+                              newJob[keyA as keyof typeof newJob] ?? ""
+                            )}
                           />
 
                           <JobFormInput
@@ -509,9 +573,12 @@ export const JobFormModal = ({
                             labelText="Interview Date"
                             placeHolder="Interview Date"
                             onChangeHandler={(event) => {
-                              newJobChangeHandler("interviewDate", event, index)
+                              newJobChangeHandler(keyB, event)
                             }}
                             type="date"
+                            value={String(
+                              newJob[keyB as keyof typeof newJob] ?? ""
+                            )}
                           />
 
                           <div>
@@ -523,24 +590,27 @@ export const JobFormModal = ({
                               id="interviewNotes"
                               rows={2}
                               onChange={(event) => {
-                                newJobChangeHandler(
-                                  "interviewNotes",
-                                  event,
-                                  index
-                                )
+                                newJobChangeHandler(keyC, event)
                               }}
+                              value={String(
+                                newJob[keyC as keyof typeof newJob] ?? ""
+                              )}
                             />
                           </div>
                         </div>
                       )
                     })}
 
-                    <Button
-                      text="Add Interview"
-                      onClickHandler={() => {
-                        addInterviewToNewJob()
-                      }}
-                    />
+                    {interviews.length < 3 && (
+                      <Button
+                        text="Add Interview"
+                        onClickHandler={() => {
+                          setInterviews((prev) => {
+                            return [...prev, "1"]
+                          })
+                        }}
+                      />
+                    )}
                   </div>
                 )}
               </div>
