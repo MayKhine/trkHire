@@ -1,16 +1,21 @@
 import { useState } from "react"
 import { HexColorPicker } from "react-colorful"
 
-type LegendProps = {
+type ColorPickerProps = {
   // rejected: string
   // offer: string
   // saved: string
   // applied: string
   // interview: string
   text: string
-  initalColor: string
+  color: string
+  onColorChangeHandler: (val: string) => void
 }
-export const Legend = ({ text, initalColor }: LegendProps) =>
+export const ColorPicker = ({
+  text,
+  color,
+  onColorChangeHandler,
+}: ColorPickerProps) =>
   //   {
   //   rejected,
   //   offer,
@@ -20,14 +25,14 @@ export const Legend = ({ text, initalColor }: LegendProps) =>
   // }: LegendProps
 
   {
-    const [color, setColor] = useState(initalColor)
+    // const [color, setColor] = useState(initalColor)
     const [colorPickerOpen, setColorPickerOpen] = useState(false)
 
     return (
-      <div className="bg-green-300 m-4">
-        <div>
+      <div className="bg-green-300 m-4 p-4">
+        <div className="flex flex-col justify-center items-center">
           <div
-            className="w-10 h-10 border-2 m-6"
+            className="w-10 h-10 border-2 cursor-pointer"
             style={{ backgroundColor: color }}
             onClick={() => {
               setColorPickerOpen(!colorPickerOpen)
@@ -37,20 +42,20 @@ export const Legend = ({ text, initalColor }: LegendProps) =>
         </div>
         {colorPickerOpen && (
           <div
-            // className="z-15 w-full h-full fixed left-0 top-0 bg-red-300/20"
             onClick={() => {
               setColorPickerOpen(!colorPickerOpen)
             }}
           >
-            <div className="z-15 w-full h-full fixed left-0 top-0 bg-red-300/20"></div>
+            <div className="z-15 w-full h-full fixed left-0 top-0 "></div>
             <div
               className="z-20 absolute"
               onClick={(event) => event.stopPropagation()}
             >
               <HexColorPicker
+                style={{ cursor: "pointer" }}
                 color={color}
                 onChange={(val) => {
-                  setColor(val)
+                  onColorChangeHandler(val)
                 }}
               />
             </div>
