@@ -35,7 +35,7 @@ export const HomePg = () => {
           Welcome
         </div>
         <div className="bg-lightBlue1 gap-6 flex flex-col h-full border-b-2 border-r-2 overflow-x-auto max-w-[100%] ">
-          <div className="bg-offWhite flex flex-col justify-center items-center w-full pt-4 pb-4 border-b-2">
+          <div className="bg-offWhite flex flex-col justify-center items-center w-full pt-4 pb-4 border-b-2 min-w-max">
             <div className="flex">
               {legendColorArr.map((e, index) => {
                 return (
@@ -59,16 +59,23 @@ export const HomePg = () => {
             </div>
             <div className="text-lg font-bold"> Legend</div>
           </div>
-          <div className="ml-4 bg-amber-200 w-max flex flex-col justify-center items-center">
-            <div>
-              <PieChartGraph
-                dataArr={jobData}
-                width={250}
-                height={250}
-                colorArr={legendColorArr}
-              />
+          <div className="p-4 bg-pink-300 w-full h-full">
+            <div className="w-max flex flex-col justify-center items-center bg-amber-100">
+              <div>
+                <PieChartGraph
+                  dataArr={jobData}
+                  width={250}
+                  height={250}
+                  colorArr={legendColorArr}
+                />
+              </div>
+              <div>Pie Char by Status</div>
             </div>
-            <div>Pie Char by Status</div>
+
+            <div>
+              <div> Line Graph</div>
+              <div> Line Graph</div>
+            </div>
           </div>
         </div>
       </div>
