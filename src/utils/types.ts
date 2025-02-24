@@ -18,6 +18,8 @@ export type jobStatusType =
   | "offer"
   | "rejected"
 
+export type legendColorArrType = Array<{ id: jobStatusType; color: string }>
+
 export type jobByStatusColumnsType = {
   id: "saved" | "applied" | "interview" | "offer" | "rejected"
   colTitle: string

@@ -29,7 +29,7 @@ export const ColorPicker = ({
     const [colorPickerOpen, setColorPickerOpen] = useState(false)
 
     return (
-      <div className="bg-green-300 m-4 p-4">
+      <div className="m-1 w-17">
         <div className="flex flex-col justify-center items-center">
           <div
             className="w-10 h-10 border-2 cursor-pointer"
