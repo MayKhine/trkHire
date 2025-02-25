@@ -1,8 +1,11 @@
 import "react-resizable/css/styles.css"
 import { ResizableJobItem } from "./ResizableJobItem"
-import { columnsForJobTables, jobs } from "../../utils/data"
+import { columnsForJobTables } from "../../utils/data"
+import { loadJobsFromLocalStorage } from "../../utils/localStorageUtils"
 
 export const JobTable = () => {
+  const jobs = loadJobsFromLocalStorage()
+
   // Handle resize stop event
   const onResizeStop = (id: string, width: number) => {
     // columnsForJobTables.width = width
@@ -14,8 +17,8 @@ export const JobTable = () => {
     })
   }
 
-  const jobKeys = Object.keys(jobs[0])
-  console.log(jobKeys)
+  // const jobKeys = Object.keys(jobs[0])
+  // console.log(jobKeys)
 
   return (
     <div className="w-max border-l-2 border-t-2 border-b-1 ml-6 mr-6">

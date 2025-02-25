@@ -12,9 +12,14 @@ import {
 import { KanbanColumn } from "./KanbanColumn"
 import { KanbanCard } from "./KanbanCard"
 import { arrayMove } from "@dnd-kit/sortable"
-import { jobs as initialJobs } from "../../utils/data"
+import {
+  loadJobsFromLocalStorage,
+  saveJobsToLocalStorage,
+} from "../../utils/localStorageUtils"
 
 export const KanbanBoard = () => {
+  const initialJobs = loadJobsFromLocalStorage()
+
   const [columns, setColumns] = useState(jobByStatusColumns)
   const [jobs, setJobs] = useState(initialJobs)
 
@@ -63,6 +68,8 @@ export const KanbanBoard = () => {
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
+    saveJobsToLocalStorage(jobs)
+
     setActiveJob(null)
 
     const { active, over } = event
