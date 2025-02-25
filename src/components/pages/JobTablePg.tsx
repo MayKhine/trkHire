@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { JobTable } from "../jobtable/JobTable"
-import { MenuBar } from "../menu/MenuBar"
-import { JobFormModal } from "../modals/JobFormModal"
+import { Menu } from "../menu/Menu"
 import { Button } from "../buttons/Button"
+import { JobForm } from "../forms/JobForm"
 
 export const JobTablePg = () => {
   const [jobFormModalToggle, setJobFormModalToggle] = useState(false)
 
   return (
-    <div className="flex h-screen">
-      <MenuBar />
+    <div className="flex md:flex-row flex-col h-screen">
+      <Menu />
       <div className="bg-pink-200 w-full h-full overflow-hidden flex flex-col">
         <div className="text-2xl font-bold p-6 border-2 border-l-0">
           Job Table
@@ -29,14 +29,11 @@ export const JobTablePg = () => {
           </div>
         </div>
         {jobFormModalToggle && (
-          <JobFormModal
-            onAddHandler={() => {
-              console.log("Tod o . add job")
-            }}
+          <JobForm
             onCancleHandler={() => {
               setJobFormModalToggle(false)
             }}
-          ></JobFormModal>
+          ></JobForm>
         )}
       </div>
     </div>

@@ -6,7 +6,7 @@ type MenuButtonProps = {
 export const MenuButton = ({ text, onClickHandler }: MenuButtonProps) => {
   return (
     <button
-      className="p-2 text-lg font-bold cursor-pointer text-blue hover:text-darkBlue"
+      className="pt-2 pb-2 text-lg font-bold cursor-pointer text-blue hover:text-darkBlue"
       onClick={onClickHandler}
     >
       {text}

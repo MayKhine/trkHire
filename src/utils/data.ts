@@ -30,13 +30,13 @@ export const columnsForJobTables = [
     width: 150,
   },
   {
-    id: "priority",
-    text: "Priority",
+    id: "status",
+    text: "Status",
     width: 150,
   },
   {
-    id: "status",
-    text: "Status",
+    id: "priority",
+    text: "Priority",
     width: 150,
   },
   {
@@ -95,8 +95,48 @@ export const columnsForJobTables = [
     width: 150,
   },
   {
-    id: "interviews",
-    text: "Interviews",
+    id: "interviewRound1",
+    text: "interviewRound1",
+    width: 150,
+  },
+  {
+    id: "interviewDate1",
+    text: "interviewDate1",
+    width: 150,
+  },
+  {
+    id: "interviewNotes1",
+    text: "interviewNotes1",
+    width: 150,
+  },
+  {
+    id: "interviewRound2",
+    text: "interviewRound2",
+    width: 150,
+  },
+  {
+    id: "interviewDate2",
+    text: "interviewDate12",
+    width: 150,
+  },
+  {
+    id: "interviewNotes2",
+    text: "interviewNotes2",
+    width: 150,
+  },
+  {
+    id: "interviewRound3",
+    text: "interviewRound3",
+    width: 150,
+  },
+  {
+    id: "interviewDate3",
+    text: "interviewDate3",
+    width: 150,
+  },
+  {
+    id: "interviewNotes3",
+    text: "interviewNotes3",
     width: 150,
   },
 ]

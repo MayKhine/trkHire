@@ -4,8 +4,8 @@ import { KanbanCard } from "./KanbanCard"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { KanbanAddJobButton } from "./KanbanAddJobButton"
 import { useState } from "react"
-import { JobFormModal } from "../modals/JobFormModal"
 import { jobs } from "../../utils/data"
+import { JobForm } from "../forms/JobForm"
 type KanbanColumnProps = {
   column: jobByStatusColumnsType
 }
@@ -43,15 +43,12 @@ export const KanbanColumn = ({ column }: KanbanColumnProps) => {
       </SortableContext>
 
       {jobFormModalToggle && (
-        <JobFormModal
-          onAddHandler={() => {
-            console.log("Tod o . add job")
-          }}
+        <JobForm
           onCancleHandler={() => {
             setJobFormModalToggle(false)
           }}
           jobStatus={column.id}
-        ></JobFormModal>
+        ></JobForm>
       )}
     </div>
   )

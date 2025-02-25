@@ -1,4 +1,3 @@
-import { MenuBar } from "../menu/MenuBar"
 import { jobByStatusColumns } from "../../utils/data"
 import {
   jobByStatusColumnsType,
@@ -8,6 +7,7 @@ import {
 import { PieChartGraph } from "../charts/PieChartGraph"
 import { ColorPicker } from "../charts/ColorPicker"
 import { useState } from "react"
+import { Menu } from "../menu/Menu"
 export const HomePg = () => {
   const getTheJobsByStatus = (
     jobByStatusColumns: Array<jobByStatusColumnsType>
@@ -28,8 +28,8 @@ export const HomePg = () => {
   ])
 
   return (
-    <div className="flex w-full h-full bg-amber-300">
-      <MenuBar />
+    <div className="flex md:flex-row flex-col w-full h-full bg-amber-300">
+      <Menu />
       <div className="bg-pink-200 w-full h-full overflow-hidden flex flex-col relative">
         <div className="text-2xl font-bold p-6 border-2 border-l-0">
           Welcome
