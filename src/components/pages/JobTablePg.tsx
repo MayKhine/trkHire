@@ -14,7 +14,7 @@ export const JobTablePg = () => {
         <div className="text-2xl font-bold p-6 border-2 border-l-0">
           Job Table
         </div>
-        <div className="bg-amber-200 gap-6 flex flex-col h-full border-b-2 border-r-2">
+        <div className="bg-amber-200 gap-6 flex flex-col h-full border-b-2 border-r-2 overflow-x-auto overflow-y-auto max-w-[100%]">
           <div className="pt-6 pr-6 flex justify-end">
             <Button
               onClickHandler={() => {
@@ -24,7 +24,7 @@ export const JobTablePg = () => {
             />
           </div>
 
-          <div className="overflow-x-scroll max-w-[100%] h-full">
+          <div className="mb-5">
             <JobTable />
           </div>
         </div>

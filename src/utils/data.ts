@@ -11,7 +11,7 @@ export const jobByStatusColumns: Array<jobByStatusColumnsType> = [
 export const columnsForJobTables = [
   {
     id: "id",
-    text: "id",
+    text: "Id",
     width: 150,
   },
   {

@@ -26,6 +26,7 @@ specifiers:
   tailwindcss: ^4.0.4
   typescript: ~5.7.2
   typescript-eslint: ^8.22.0
+  uuid: ^11.1.0
   vite: ^6.1.0
 
 dependencies:
@@ -43,6 +44,7 @@ dependencies:
   react-router-dom: 7.2.0_upmzqgzhjrquwzo2dphtigtdgi
   recharts: 2.15.1_upmzqgzhjrquwzo2dphtigtdgi
   tailwindcss: 4.0.4
+  uuid: 11.1.0
 
 devDependencies:
   '@eslint/js': 9.20.0
@@ -2378,6 +2380,11 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /uuid/11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
+    dev: false
 
   /victory-vendor/36.9.2:
     resolution: {integrity: sha512-PnpQQMuxlwYdocC8fIJqVXvkeViHYzotI+NJrCuav0ZYFoq912ZHBk3mCeuj+5/VpodOjPe1z0Fk2ihgzlXqjQ==}

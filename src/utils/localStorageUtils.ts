@@ -9,17 +9,6 @@ export const saveJobsToLocalStorage = (jobs: Array<jobApplicationType>) => {
 export const loadJobsFromLocalStorage = (): Array<jobApplicationType> => {
   const storedJobs = localStorage.getItem(STORAGE_KEY)
   return storedJobs ? JSON.parse(storedJobs) : []
-
-  // const storedJobs = localStorage.getItem(STORAGE_KEY)
-  // if (!storedJobs) return []
-
-  // // Parse and validate job data
-  // const parsedJobs = JSON.parse(storedJobs).map((job: jobApplicationType) => ({
-  //   ...job,
-  //   status: validStatuses.includes(job.status) ? job.status : "saved", // Default to "saved" if invalid
-  // }))
-
-  // return parsedJobs
 }
 
 export const addJobToLocalStorage = (newJob: jobApplicationType) => {

@@ -5,6 +5,8 @@ import { DropDownButton } from "../buttons/DropDownButton"
 import { jobApplicationType, jobStatusType } from "../../utils/types"
 import { ExpendButton } from "../buttons/ExpendButton"
 import { JobFormInput } from "../forms/JobFormInput"
+import { addJobToLocalStorage } from "../../utils/localStorageUtils"
+import { v4 as uuidv4 } from "uuid"
 
 type JobFormProps = {
   onCancleHandler: () => void
@@ -21,9 +23,12 @@ export const JobForm = ({
   const [jobTypeDropDownToggle, setJobTypeDropDownToggle] = useState(false)
   const [interviewExpendToggle, setInterviewExpendToggle] = useState(false)
   const [contactExpendToggle, setContactExpendToggle] = useState(false)
-
   const [interviews, setInterviews] = useState<Array<string>>(["1"])
-
+  const [formInputErrors, setFormInputErrors] = useState({
+    title: "",
+    company: "",
+    jobLink: "",
+  })
   const statusMap: Record<string, string> = {
     saved: "Saved",
     applied: "Applied",
@@ -39,8 +44,10 @@ export const JobForm = ({
     internship: "Internship",
   }
 
+  const uniqueId = uuidv4()
+
   const [newJob, setNewJob] = useState<jobApplicationType>({
-    id: "",
+    id: uniqueId,
     title: "",
     jobLink: "",
     company: "",
@@ -68,15 +75,44 @@ export const JobForm = ({
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    if (key == "title" || key == "company" || key == "jobLink") {
+      setFormInputErrors((prev) => {
+        return {
+          ...prev,
+          [key]: event.target.value.length > 0 ? "" : `${key} error`,
+        }
+      })
+    }
+
     setNewJob((prev) => {
       return { ...prev, [key]: event.target.value }
     })
     return
   }
 
-  const createJob = () => {
-    console.log("New job: ", newJob)
-    // onAddHandler()
+  const addJob = () => {
+    // check if new job has titile, company, joblink, status, priority and archive
+    if (
+      newJob.title.length == 0 ||
+      newJob.company.length == 0 ||
+      newJob.jobLink.length == 0 ||
+      newJob.status.length == 0 ||
+      newJob.priority.length == 0
+    ) {
+      console.log("show erro")
+      setFormInputErrors((prev) => {
+        return {
+          ...prev,
+          title: newJob.title.length == 0 ? "title error" : "",
+          company: newJob.company.length == 0 ? "company error" : "",
+          jobLink: newJob.jobLink.length == 0 ? "job link error" : "",
+        }
+      })
+      return
+    }
+
+    addJobToLocalStorage(newJob)
+    onCancleHandler()
   }
 
   return (
@@ -102,6 +138,8 @@ export const JobForm = ({
                   newJobChangeHandler("title", event)
                 }}
                 type="text"
+                required={true}
+                error={formInputErrors.title}
               />
 
               <JobFormInput
@@ -112,6 +150,8 @@ export const JobForm = ({
                   newJobChangeHandler("company", event)
                 }}
                 type="text"
+                required={true}
+                error={formInputErrors.company}
               />
 
               <JobFormInput
@@ -122,6 +162,8 @@ export const JobForm = ({
                   newJobChangeHandler("jobLink", event)
                 }}
                 type="text"
+                required={true}
+                error={formInputErrors.jobLink}
               />
 
               <div
@@ -258,6 +300,7 @@ export const JobForm = ({
                   newJobChangeHandler("salary", event)
                 }}
                 type="text"
+                required={false}
               />
 
               <JobFormInput
@@ -268,6 +311,7 @@ export const JobForm = ({
                   newJobChangeHandler("location", event)
                 }}
                 type="text"
+                required={false}
               />
 
               <div
@@ -340,6 +384,7 @@ export const JobForm = ({
                   newJobChangeHandler("deadline", event)
                 }}
                 type="date"
+                required={false}
               />
 
               <JobFormInput
@@ -350,6 +395,7 @@ export const JobForm = ({
                   newJobChangeHandler("appliedDate", event)
                 }}
                 type="date"
+                required={false}
               />
 
               <JobFormInput
@@ -360,6 +406,7 @@ export const JobForm = ({
                   newJobChangeHandler("followUpDate", event)
                 }}
                 type="date"
+                required={false}
               />
 
               <div>
@@ -389,6 +436,7 @@ export const JobForm = ({
                         newJobChangeHandler("contactName", event)
                       }}
                       type="text"
+                      required={false}
                     />
 
                     <JobFormInput
@@ -399,6 +447,7 @@ export const JobForm = ({
                         newJobChangeHandler("contact", event)
                       }}
                       type="text"
+                      required={false}
                     />
 
                     <div>
@@ -472,6 +521,7 @@ export const JobForm = ({
                             value={String(
                               newJob[keyA as keyof typeof newJob] ?? ""
                             )}
+                            required={false}
                           />
 
                           <JobFormInput
@@ -485,6 +535,7 @@ export const JobForm = ({
                             value={String(
                               newJob[keyB as keyof typeof newJob] ?? ""
                             )}
+                            required={false}
                           />
 
                           <div>
@@ -527,8 +578,7 @@ export const JobForm = ({
             <Button
               text="Add"
               onClickHandler={() => {
-                createJob()
-                // onAddHandler()
+                addJob()
               }}
             />
           </div>

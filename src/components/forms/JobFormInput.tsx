@@ -4,7 +4,9 @@ type JobFromInputProps = {
   placeHolder: string
   id: string
   type: string
+  required: boolean
   value?: string
+  error?: string
 }
 export const JobFormInput = ({
   onChangeHandler,
@@ -13,22 +15,37 @@ export const JobFormInput = ({
   id,
   type,
   value,
-}: // val,
-JobFromInputProps) => {
+  required,
+  error,
+}: JobFromInputProps) => {
   return (
     <div>
-      <label htmlFor={labelText}>{labelText}</label>
-      <input
-        className="w-full h-11 box-border outline-none border pl-2 border-lightGray hover:border-blue hover:border-2 focus:border-blue/10 focus:border-2 bg-offWhite rounded mb-2  mt-1"
-        id={id}
-        type={type}
-        placeholder={placeHolder}
-        alt={labelText + " input"}
-        onChange={(event) => {
-          onChangeHandler(event)
-        }}
-        value={value}
-      />
+      {required && (
+        <div className="flex gap-.5">
+          <label htmlFor={labelText}>{labelText} </label>{" "}
+          <div className="text-red-500">*</div>
+        </div>
+      )}
+      {!required && (
+        <div className="flex gap-.5">
+          <label htmlFor={labelText}>{labelText} </label>{" "}
+        </div>
+      )}
+      <div className="h-17">
+        <input
+          className="w-full h-11 box-border outline-none border pl-2 border-lightGray hover:border-blue hover:border-2 focus:border-blue/10 focus:border-2 bg-offWhite rounded mt-1"
+          id={id}
+          type={type}
+          placeholder={placeHolder}
+          alt={labelText + " input"}
+          onChange={(event) => {
+            onChangeHandler(event)
+          }}
+          value={value}
+          required={required}
+        />
+        {error && <div className="mt-0 text-xs text-red-500">{error} </div>}
+      </div>
     </div>
   )
 }

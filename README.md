@@ -6,8 +6,8 @@
 - delete a job
 - sort the jobs
 - filter the jobs
-- load to local storage
-- unload from local storage
+- load to local storage : done
+- unload from local storage to json file
 
 #### wants
 
