@@ -11,7 +11,6 @@ export const RightClick = ({
   return (
     <div
       onClick={() => {
-        // setRightClick({ id: "" })
         onBgDivClickHander()
       }}
       onContextMenu={(event) => {
