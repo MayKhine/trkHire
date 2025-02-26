@@ -2,7 +2,8 @@ import "react-resizable/css/styles.css"
 import { ResizableJobItem } from "./ResizableJobItem"
 import { columnsForJobTables } from "../../utils/data"
 import { loadJobsFromLocalStorage } from "../../utils/localStorageUtils"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { RightClick } from "./RightClick"
 
 export const JobTable = () => {
   const jobs = loadJobsFromLocalStorage()
@@ -32,10 +33,25 @@ export const JobTable = () => {
     event: React.MouseEvent<HTMLDivElement>,
     jobId: string
   ) => {
+    // Get container's bounding rectangle
+    const containerRect = containerRef.current?.getBoundingClientRect()
+
+    // Calculate coordinates relative to the container if available, or fallback to page coordinates
+    const x = containerRect ? event.clientX - containerRect.left : event.clientX
+    const y = containerRect ? event.clientY - containerRect.top : event.clientY
+
+    setMenuPosition({ x, y })
+
     event.preventDefault() // Prevent default context menu
     setRightClick({ id: jobId })
     console.log("Right-click detected!", event, jobId)
   }
+
+  const [menuPosition, setMenuPosition] = useState<{
+    x: number
+    y: number
+  } | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="w-max border-l-2 border-t-2 border-b-1 ml-6 mr-6">
@@ -44,6 +60,10 @@ export const JobTable = () => {
           className="grid grid-flow-col w-max"
           onMouseLeave={() => {
             setMouseHoverJob({ id: "" })
+          }}
+          ref={containerRef}
+          onClick={() => {
+            setMenuPosition(null)
           }}
         >
           <ResizableJobItem
@@ -58,7 +78,21 @@ export const JobTable = () => {
             {jobs.map((job, jobIndex) => {
               return (
                 <div key={job.id}>
-                  {mouseHoverJob.id != job.id && (
+                  <div
+                    key={job.id + jobIndex}
+                    className=":hover-bg-pink-300 w-full border-b-1 h-10 pt-2 pl-2"
+                    style={{ width: "100%" }}
+                    onMouseEnter={() => {
+                      selectJobHandler(job.id)
+                    }}
+                    onContextMenu={(event) => {
+                      onRightClickHandler(event, job.id)
+                    }}
+                  >
+                    {jobIndex + 1}
+                  </div>
+
+                  {/* {mouseHoverJob.id != job.id && (
                     <div
                       key={job.id + jobIndex}
                       className="w-full border-b-1 h-10 pt-2 pl-2"
@@ -72,8 +106,8 @@ export const JobTable = () => {
                     >
                       {jobIndex + 1}
                     </div>
-                  )}
-
+                  )} */}
+                  {/* 
                   {mouseHoverJob.id == job.id && (
                     <div
                       key={job.id + jobIndex}
@@ -88,24 +122,27 @@ export const JobTable = () => {
                     >
                       {jobIndex + 1}
                     </div>
-                  )}
+                  )} */}
 
-                  {rightClick.id == job.id && (
+                  {rightClick.id == job.id && menuPosition && (
                     <div
-                      onClick={() => {
-                        setRightClick({ id: "" })
-                      }}
-                      onContextMenu={(event) => {
-                        onRightClickHandler(event, "")
+                      style={{
+                        position: "absolute",
+                        top: menuPosition.y,
+                        left: menuPosition.x,
+                        zIndex: 20,
                       }}
                     >
-                      <div className="z-15 w-full h-full fixed left-0 top-0 bg-blue-500/50"></div>
-                      <div
-                        className="z-20 absolute mt-1"
-                        onClick={(event) => event.stopPropagation()}
-                      >
-                        <div className="bg-pink-400">Right CLick</div>
-                      </div>
+                      <RightClick
+                        onBgDivClickHander={() => {
+                          setRightClick({ id: "" })
+                        }}
+                        onRightClickHandler={(
+                          event: React.MouseEvent<HTMLDivElement>
+                        ) => {
+                          onRightClickHandler(event, "")
+                        }}
+                      />
                     </div>
                   )}
                 </div>
@@ -138,6 +175,9 @@ export const JobTable = () => {
                             onMouseEnter={() => {
                               selectJobHandler(job.id)
                             }}
+                            onContextMenu={(event) => {
+                              onRightClickHandler(event, job.id)
+                            }}
                           >
                             {String(job[key] ?? "  ")}
                           </div>
@@ -150,6 +190,9 @@ export const JobTable = () => {
                             style={{ width: "100%" }}
                             onMouseEnter={() => {
                               selectJobHandler(job.id)
+                            }}
+                            onContextMenu={(event) => {
+                              onRightClickHandler(event, job.id)
                             }}
                           >
                             {String(job[key] ?? "  ")}
