@@ -1,17 +1,17 @@
 import { OptionsDropDown } from "./OptionsDropDown"
 
 type RightClickProps = {
-  onBgDivClickHander: () => void
+  onCloseTheDropDownHandler: () => void
   onRightClickHandler: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 export const RightClick = ({
-  onBgDivClickHander,
+  onCloseTheDropDownHandler,
   onRightClickHandler,
 }: RightClickProps) => {
   return (
     <div
       onClick={() => {
-        onBgDivClickHander()
+        onCloseTheDropDownHandler()
       }}
       onContextMenu={(event) => {
         onRightClickHandler(event)
@@ -22,7 +22,11 @@ export const RightClick = ({
         className="z-20 absolute mt-1"
         onClick={(event) => event.stopPropagation()}
       >
-        <OptionsDropDown />
+        <OptionsDropDown
+          closeTheDropDownHandler={() => {
+            onCloseTheDropDownHandler()
+          }}
+        />
       </div>
     </div>
   )

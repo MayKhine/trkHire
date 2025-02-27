@@ -1,18 +1,27 @@
 import "react-resizable/css/styles.css"
 import { ResizableJobItem } from "./ResizableJobItem"
 import { columnsForJobTables } from "../../utils/data"
-import { loadJobsFromLocalStorage } from "../../utils/localStorageUtils"
+// import { loadJobsFromLocalStorage } from "../../utils/localStorageUtils"
 import { useRef, useState } from "react"
 import { RightClick } from "./RightClick"
 import { DateFormat } from "../../utils/helperFunc"
+import { jobApplicationType } from "../../utils/types"
 
-export const JobTable = () => {
-  const jobs = loadJobsFromLocalStorage()
+type JobTableProps = {
+  jobs: Array<jobApplicationType>
+}
+export const JobTable = ({ jobs }: JobTableProps) => {
+  // const jobs = loadJobsFromLocalStorage()
+
   const [mouseHoverJob, setMouseHoverJob] = useState({ id: "" })
   const [rightClick, setRightClick] = useState({ id: "" })
-  // Handle resize stop event
+  const [menuPosition, setMenuPosition] = useState<{
+    x: number
+    y: number
+  } | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const onResizeStop = (id: string, width: number) => {
-    // columnsForJobTables.width = width
     columnsForJobTables.map((col) => {
       if (col.id == id) {
         col.width = width
@@ -29,12 +38,6 @@ export const JobTable = () => {
 
     setMouseHoverJob({ id: jobId })
   }
-
-  const [menuPosition, setMenuPosition] = useState<{
-    x: number
-    y: number
-  } | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const onRightClickHandler = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -118,7 +121,7 @@ export const JobTable = () => {
                       }}
                     >
                       <RightClick
-                        onBgDivClickHander={() => {
+                        onCloseTheDropDownHandler={() => {
                           setRightClick({ id: "" })
                         }}
                         onRightClickHandler={(
